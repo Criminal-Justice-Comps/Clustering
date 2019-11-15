@@ -5,6 +5,7 @@ x = [1, 10]
 y =  [1, 1]
 z = [-4, 1]
 data = [x, y, z]
+
 def magnitude(vector):
     sum_of_squares = 0
     for i in range(len(vector)):
@@ -27,29 +28,20 @@ def unitVector(vector):
 def euclideanDistance(vector1, vector2):
     assert(len(vector1) == len(vector2)), "Different size vectors"
     distance = 0
-    print("####################")
     for i in range(len(vector1)):
-         distance += pow(vector1[i] - vector2[i], 2)
-         print(distance)
+         distance += pow(abs(vector1[i]) - abs(vector2[i]), 2)
     distance = math.sqrt(distance)
-    print("####################")
     return distance
 
 def minDistance(list_of_vectors):
     min_dist = 10
-    closest_vectors = ()
-    print("*********************")
+    closest_vectors = None
     for i in range(len(list_of_vectors)):
-        print("MIN = ", min_dist)
         for j in range(i+1, len(list_of_vectors)):
             dist = euclideanDistance(list_of_vectors[i], list_of_vectors[j])
-
-            print(dist)
-
             if(dist < min_dist):
                 min_dist = dist
                 closest_vectors = (i, j)
-    print("*********************")
     return min_dist, closest_vectors
 
 def hierarchicalClustering(data):
@@ -78,4 +70,5 @@ print(unitZ)
 # print(euclideanDistance(unitX, unitY))
 # print(euclideanDistance(unitX, unitZ))
 # print(euclideanDistance(unitY, unitZ))
+print(minDistance([x, y, z]))
 print(minDistance([unitX,unitY,unitZ]))
