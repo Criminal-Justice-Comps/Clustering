@@ -4,7 +4,7 @@ import math
 x = [1, 10]
 y =  [1, 1]
 z = [-4, 1]
-data = [x, y, z]
+num_data = [x, y, z]
 
 def magnitude(vector):
     sum_of_squares = 0
@@ -33,8 +33,9 @@ def euclideanDistance(vector1, vector2):
     distance = math.sqrt(distance)
     return distance
 
+# change to take in a list of clusters
 def minDistance(list_of_vectors):
-    min_dist = 10
+    min_dist = math.inf
     closest_vectors = None
     for i in range(len(list_of_vectors)):
         for j in range(i+1, len(list_of_vectors)):
@@ -44,31 +45,58 @@ def minDistance(list_of_vectors):
                 closest_vectors = (i, j)
     return min_dist, closest_vectors
 
-def hierarchicalClustering(data):
+class Clustroid:
+  def __init__(self, numerical_vector, categorical_vector = None,
+                    parent = None, radius = None):
+    self.num_vector = numerical_vector
+    self.cat_vector = categorical_vector
+    self.parent = parent
+    self.radius = radius # Limit the size of a cluster, probably won't need
 
-    list_of_uv = []
-    for i in range(len(data)):
-        unit_vec = unitVector(data[i])
-        list_of_uv.append(unit_vec)
+def hierarchicalClustering(data, radius = None):
 
     list_of_centroids = []
-    for i in range(len(list_of_uv)):
-        for j in range(i+1, len(list_of_uv)):
-            continue
-    smallest_distance = 10
+    smallest_distance, closest_vectors = minDistance(data)
+    '''if both the vectors in closest_vectors are centroids, then merge clusters
+    and optimize a new centroid. Else if includes a single centroid, then
+    optimize that centroid and add the non centroid to the cluster. Otherwise,
+    both of the closest_vectors are not part of any cluster, form a new centroid.
 
-print(x)
-print(y)
-print(z)
-print("--------------------------------------------------")
-unitX = unitVector(x)
-unitY = unitVector(y)
-unitZ = unitVector(z)
-print(unitX)
-print(unitY)
-print(unitZ)
-# print(euclideanDistance(unitX, unitY))
-# print(euclideanDistance(unitX, unitZ))
-# print(euclideanDistance(unitY, unitZ))
-print(minDistance([x, y, z]))
-print(minDistance([unitX,unitY,unitZ]))
+    Create a Centroid, it should contain the parent centroid, a list of vectors
+    that are a part of its cluster, its range(?), a vector reoresented by its
+    location
+    '''
+
+def main():
+    #open some CSV file, read through it, and create a matrix of vectors
+
+    #get numerical data
+
+    #assume numerical data only for now
+    list_of_clustroids = []
+    for i in range(len(num_data)):
+        new_clustroid = Clustroid(unitVector(num_data[i]))
+        list_of_clustroids.append(new_clustroid)
+
+    #turn numerical data into unit vectors
+    # list_of_uv = []
+    # for i in range(len(num_data)):
+    #     unit_vec = unitVector(num_data[i])
+    #     list_of_uv.append(unit_vec)
+
+
+    print(x)
+    print(y)
+    print(z)
+    print("--------------------------------------------------")
+    unitX = unitVector(x)
+    unitY = unitVector(y)
+    unitZ = unitVector(z)
+    print(unitX)
+    print(unitY)
+    print(unitZ)
+    print("--------------------------------------------------")
+    print(hierarchicalClustering(list_of_uv))
+
+if __name__ == '__main__':
+    main()
