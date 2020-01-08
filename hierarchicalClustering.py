@@ -1,17 +1,19 @@
 import unittest
 import math
 
-x = [1, 10]
-y =  [1, 1]
-z = [-4, 1]
-num_data = [x, y, z]
-
 def magnitude(vector):
     sum_of_squares = 0
     for i in range(len(vector)):
         sum_of_squares += pow(vector[i], 2)
     magnitude = math.sqrt(sum_of_squares)
     return magnitude
+
+def addVectors(vector1, vector2):
+    assert(len(vector1) == len(vector2) and "Length doesn't match")
+    sum_vector = []
+    for i in range(len(vector1)):
+        sum_vector.append(vector1[i] + vector2[i])
+    return sum_vector
 
 def scale(vector, scalar):
     scaled_vector = []
@@ -33,17 +35,18 @@ def euclideanDistance(vector1, vector2):
     distance = math.sqrt(distance)
     return distance
 
-# change to take in a list of clusters
-def minDistance(list_of_vectors):
+#goes through a list of clusters and gets the two closest ones
+def minDistance(list_of_clusters):
     min_dist = math.inf
-    closest_vectors = None
-    for i in range(len(list_of_vectors)):
-        for j in range(i+1, len(list_of_vectors)):
-            dist = euclideanDistance(list_of_vectors[i], list_of_vectors[j])
+    closest_clusters = None
+    for i in range(len(list_of_clusters)):
+        for j in range(i+1, len(list_of_clusters)):
+            dist = euclideanDistance(list_of_clusters[i].num_vector,
+                list_of_clusters[j].num_vector)
             if(dist < min_dist):
                 min_dist = dist
-                closest_vectors = (i, j)
-    return min_dist, closest_vectors
+                closest_clusters = (i, j)
+    return min_dist, closest_clusters
 
 class Clustroid:
   def __init__(self, numerical_vector, categorical_vector = None,
@@ -53,10 +56,29 @@ class Clustroid:
     self.parent = parent
     self.radius = radius # Limit the size of a cluster, probably won't need
 
-def hierarchicalClustering(data, radius = None):
+def getCentroid(vector1, vector2):
+    centroid = scale(addVectors(vector1, vector2), 0.5)
+    return centroid
 
+def hierarchicalClustering(data, radius = None):
+    if(len(data) == 0):
+        return None
+    if(len(data) == 1):
+        only = Clustroid(data[0])
+        return only
     list_of_centroids = []
-    smallest_distance, closest_vectors = minDistance(data)
+    smallest_distance, closest_clusters = minDistance(data)
+    cluster1 = data[closest_clusters[0]]
+    cluster2 = data[closest_clusters[1]]
+    cluster1_num_vec = cluster1.num_vector
+    cluster2_num_vec = cluster2.num_vector
+    cluster3_num_vec = getCentroid(cluster1_num_vec, cluster2_num_vec)
+    print("############################################")
+    print("Cluster1 is: ", cluster1_num_vec)
+    print("Cluster2 is: ", cluster2_num_vec)
+    print("The new cluster is: ", cluster3_num_vec)
+    print("############################################")
+    return closest_clusters
     '''if both the vectors in closest_vectors are centroids, then merge clusters
     and optimize a new centroid. Else if includes a single centroid, then
     optimize that centroid and add the non centroid to the cluster. Otherwise,
@@ -73,17 +95,16 @@ def main():
     #get numerical data
 
     #assume numerical data only for now
+
+    x = [1, 10]
+    y =  [1, 1]
+    z = [-4, 1]
+    num_data = [x, y, z]
+
     list_of_clustroids = []
     for i in range(len(num_data)):
         new_clustroid = Clustroid(unitVector(num_data[i]))
         list_of_clustroids.append(new_clustroid)
-
-    #turn numerical data into unit vectors
-    # list_of_uv = []
-    # for i in range(len(num_data)):
-    #     unit_vec = unitVector(num_data[i])
-    #     list_of_uv.append(unit_vec)
-
 
     print(x)
     print(y)
@@ -96,7 +117,11 @@ def main():
     print(unitY)
     print(unitZ)
     print("--------------------------------------------------")
-    print(hierarchicalClustering(list_of_uv))
+    print("||||||||||||||||||||||||||||||||||||||||||||")
+    print("No items in data", hierarchicalClustering([]))
+    print("One item in data", hierarchicalClustering([x]))
+    print("||||||||||||||||||||||||||||||||||||||||||||")
+    print("Multiple items, data", hierarchicalClustering(list_of_clustroids))
 
 if __name__ == '__main__':
     main()
