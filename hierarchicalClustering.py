@@ -48,7 +48,7 @@ def minDistance(list_of_clusters):
                 closest_clusters = (i, j)
     return min_dist, closest_clusters
 
-class Clustroid:
+class Cluster:
   def __init__(self, numerical_vector, categorical_vector = None,
                     parent = None, radius = None):
     self.num_vector = numerical_vector
@@ -64,7 +64,7 @@ def hierarchicalClustering(data, radius = None):
     if(len(data) == 0):
         return None
     if(len(data) == 1):
-        only = Clustroid(data[0])
+        only = Cluster(data[0])
         return only
     list_of_centroids = []
     smallest_distance, closest_clusters = minDistance(data)
@@ -101,10 +101,10 @@ def main():
     z = [-4, 1]
     num_data = [x, y, z]
 
-    list_of_clustroids = []
+    list_of_clusters = []
     for i in range(len(num_data)):
-        new_clustroid = Clustroid(unitVector(num_data[i]))
-        list_of_clustroids.append(new_clustroid)
+        new_cluster = Cluster(unitVector(num_data[i]))
+        list_of_clusters.append(new_cluster)
 
     print(x)
     print(y)
@@ -121,7 +121,7 @@ def main():
     print("No items in data", hierarchicalClustering([]))
     print("One item in data", hierarchicalClustering([x]))
     print("||||||||||||||||||||||||||||||||||||||||||||")
-    print("Multiple items, data", hierarchicalClustering(list_of_clustroids))
+    print("Multiple items, data", hierarchicalClustering(list_of_clusters))
 
 if __name__ == '__main__':
     main()
