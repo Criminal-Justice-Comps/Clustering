@@ -35,7 +35,7 @@ def euclideanDistance(vector1, vector2):
     distance = math.sqrt(distance)
     return distance
 
-#goes through a list of clusters and gets the two closest ones
+#goes through a list of clusters and gets the index of the two closest ones
 def minDistance(list_of_clusters):
     min_dist = math.inf
     closest_clusters = None
@@ -46,15 +46,29 @@ def minDistance(list_of_clusters):
             if(dist < min_dist):
                 min_dist = dist
                 closest_clusters = (i, j)
-    return min_dist, closest_clusters
+    return closest_clusters
 
 class Cluster:
   def __init__(self, numerical_vector, categorical_vector = None,
-                    parent = None, radius = None):
+                children = None):
     self.num_vector = numerical_vector
     self.cat_vector = categorical_vector
-    self.parent = parent
-    self.radius = radius # Limit the size of a cluster, probably won't need
+    self.children = children
+    self.parent = None
+
+def printCluster(cluster):
+    print("Numerical Vector: ", cluster.num_vector)
+    print("Categorical Vector: ", cluster.cat_vector)
+    print("Children: ", cluster.children)
+    print("Parent: ", cluster.parent)
+
+def createNewCluster(cluster1, cluster2):
+
+    list_of_chldren = [cluster1, cluster2]
+    newCluster = Cluster(None, None, list_of_chldren)
+    cluster1.parent = newCluster
+    cluster2.parent = newCluster
+    return newCluster
 
 def getCentroid(vector1, vector2):
     centroid = scale(addVectors(vector1, vector2), 0.5)
@@ -66,62 +80,58 @@ def hierarchicalClustering(data, radius = None):
     if(len(data) == 1):
         only = Cluster(data[0])
         return only
-    list_of_centroids = []
-    smallest_distance, closest_clusters = minDistance(data)
-    cluster1 = data[closest_clusters[0]]
-    cluster2 = data[closest_clusters[1]]
-    cluster1_num_vec = cluster1.num_vector
-    cluster2_num_vec = cluster2.num_vector
-    cluster3_num_vec = getCentroid(cluster1_num_vec, cluster2_num_vec)
-    print("############################################")
-    print("Cluster1 is: ", cluster1_num_vec)
-    print("Cluster2 is: ", cluster2_num_vec)
-    print("The new cluster is: ", cluster3_num_vec)
-    print("############################################")
-    return closest_clusters
-    '''if both the vectors in closest_vectors are centroids, then merge clusters
-    and optimize a new centroid. Else if includes a single centroid, then
-    optimize that centroid and add the non centroid to the cluster. Otherwise,
-    both of the closest_vectors are not part of any cluster, form a new centroid.
 
-    Create a Centroid, it should contain the parent centroid, a list of vectors
-    that are a part of its cluster, its range(?), a vector reoresented by its
-    location
-    '''
+
+    #using min-link
+    # cluster1tocombine = None
+    # cluster2tocombine = None
+    # minDist = math.inf
+    # for i in range(len(data)):
+    #     cluster = data[i]
+    #     for nextCluster in data[i:]:
+    #         distance = euclideanDistance(cluster.num_data, nextCluster.num_data)
+    #         if distance < minDist:
+    #             minDist = distance
+    #             cluster1tocombine = cluster
+    #             cluster2tocombine = nextCluster
+    #     cur_magn = cluster.num_data
+    clustersToCombine = minDistance(data)
+    newCluster = createNewCluster(data.pop(clustersToCombine[0]), data.pop(clustersToCombine[1]))
+    data.append(newCluster)
+    printCluster(newCluster)
+
+    # list_of_centroids = []
+    # smallest_distance, closest_clusters = minDistance(data)
+    # cluster1 = data[closest_clusters[0]]
+    # cluster2 = data[closest_clusters[1]]
+    # cluster1_num_vec = cluster1.num_vector
+    # cluster2_num_vec = cluster2.num_vector
+    # cluster3_num_vec = getCentroid(cluster1_num_vec, cluster2_num_vec)
+    # print("############################################")
+    # print("Cluster1 is: ", cluster1_num_vec)
+    # print("Cluster2 is: ", cluster2_num_vec)
+    # print("The new cluster is: ", cluster3_num_vec)
+    # print("############################################")
 
 def main():
     #open some CSV file, read through it, and create a matrix of vectors
-
-    #get numerical data
-
     #assume numerical data only for now
-
-    x = [1, 10]
-    y =  [1, 1]
-    z = [-4, 1]
-    num_data = [x, y, z]
-
+    is_first = 1
     list_of_clusters = []
-    for i in range(len(num_data)):
-        new_cluster = Cluster(unitVector(num_data[i]))
-        list_of_clusters.append(new_cluster)
-
-    print(x)
-    print(y)
-    print(z)
-    print("--------------------------------------------------")
-    unitX = unitVector(x)
-    unitY = unitVector(y)
-    unitZ = unitVector(z)
-    print(unitX)
-    print(unitY)
-    print(unitZ)
-    print("--------------------------------------------------")
-    print("||||||||||||||||||||||||||||||||||||||||||||")
-    print("No items in data", hierarchicalClustering([]))
-    print("One item in data", hierarchicalClustering([x]))
-    print("||||||||||||||||||||||||||||||||||||||||||||")
-    print("Multiple items, data", hierarchicalClustering(list_of_clusters))
+    with open ('../datasets/NumericFeaturesDataSmall.csv', mode='r') as csvfile:
+        for line in csvfile:
+            if is_first:
+                is_first = 0
+                continue
+            num_data = line.split(",")
+            for i in range (len(num_data)):
+                num_data[i] = float(num_data[i])
+            list_of_clusters.append(Cluster(unitVector(num_data)))
+    hierarchicalClustering(list_of_clusters)
+    # print("No items in data", hierarchicalClustering([]))
+    # print("One item in data", hierarchicalClustering([x]))
+    # print("||||||||||||||||||||||||||||||||||||||||||||")
+    # print("Multiple items, data", hierarchicalClustering(list_of_clusters))
 
 if __name__ == '__main__':
     main()
