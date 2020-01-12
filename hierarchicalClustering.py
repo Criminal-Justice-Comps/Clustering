@@ -35,14 +35,60 @@ def euclideanDistance(vector1, vector2):
     distance = math.sqrt(distance)
     return distance
 
+def hasChildren(cluster):
+    if cluster.children is not None:
+        return True
+    return False
+
+def compareChildren(children1, children2):
+    min_dist = math.inf
+    dist = None
+    #basecase
+    if not hasChildren(children1):
+        if not hasChildren(children2):
+            dist = euclideanDistance(children1.num_vector,
+                                            children2.num_vector)
+            return dist
+
+        else:
+            for child in children2:
+                dist = compareChildren(children1, child)
+                if dist < min_dist:
+                    min_dist = dist
+
+    else:
+        for child in children1:
+            dist = compareChildren(child, children2)
+            if dist < min_dist:
+                min_dist = dist
+        # if not hasChildren(children2):
+        #     dist = compareChildren(children1.children[0], children2)
+        #     dist = compareChildren(children1.children[1], children2)
+        # else:
+        #     dist = compareChildren(children1.children[0], children2.children[1])
+
+    return min_dist
 #goes through a list of clusters and gets the index of the two closest ones
-def minDistance(list_of_clusters):
+def minLink(list_of_clusters):
     min_dist = math.inf
     closest_clusters = None
     for i in range(len(list_of_clusters)):
         for j in range(i+1, len(list_of_clusters)):
-            dist = euclideanDistance(list_of_clusters[i].num_vector,
-                list_of_clusters[j].num_vector)
+            cluster_i = list_of_clusters[i]
+            cluster_j = list_of_clusters[j]
+            if hasChildren(cluster_i):
+                children_i = cluster_i.children
+                children_j = cluster_j.children
+                if hasChildren(cluster_j):
+                    dist = compareChildren(children_i, children_j)
+                else:
+                    dist = compareChildren(children_i, cluster_j)
+            else:
+                if hasChildren(cluster_j):
+                    children_j = cluster_j.children
+                    dist = compareChildren(cluster_i, children_j)
+                else:
+                    dist = compareChildren(cluster_i, cluster_j)
             if(dist < min_dist):
                 min_dist = dist
                 closest_clusters = (i, j)
@@ -78,7 +124,7 @@ def hierarchicalClustering(data, radius = None):
     if(len(data) == 0):
         return None
     if(len(data) == 1):
-        only = Cluster(data[0])
+        only = data[0]
         return only
 
 
@@ -95,10 +141,11 @@ def hierarchicalClustering(data, radius = None):
     #             cluster1tocombine = cluster
     #             cluster2tocombine = nextCluster
     #     cur_magn = cluster.num_data
-    clustersToCombine = minDistance(data)
+    clustersToCombine = minLink(data)
     newCluster = createNewCluster(data.pop(clustersToCombine[0]), data.pop(clustersToCombine[1]))
     data.append(newCluster)
     printCluster(newCluster)
+    return hierarchicalClustering(data)
 
     # list_of_centroids = []
     # smallest_distance, closest_clusters = minDistance(data)
@@ -127,7 +174,7 @@ def main():
             for i in range (len(num_data)):
                 num_data[i] = float(num_data[i])
             list_of_clusters.append(Cluster(unitVector(num_data)))
-    hierarchicalClustering(list_of_clusters)
+    hierarchicalClustering(list_of_clusters[:5])
     # print("No items in data", hierarchicalClustering([]))
     # print("One item in data", hierarchicalClustering([x]))
     # print("||||||||||||||||||||||||||||||||||||||||||||")
