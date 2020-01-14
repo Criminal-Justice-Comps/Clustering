@@ -144,10 +144,12 @@ class Cluster:
     self.parent = None
 
 def printCluster(cluster):
+    print("Memory address for following cluster is: ", cluster)
     print("Numerical Vector: ", cluster.num_vector)
     print("Categorical Vector: ", cluster.cat_vector)
     print("Children: ", cluster.children)
     print("Parent: ", cluster.parent)
+    print()
 
 def printDendrogram(dendrogram):
     printCluster(dendrogram)
@@ -201,7 +203,7 @@ def main():
             num_data.pop(keys.index("decile_score"))
             num_data.pop(keys.index("person_id"))
             list_of_clusters.append(Cluster(num_data))
-    dendrogram = hierarchicalClustering(list_of_clusters)
+    dendrogram = hierarchicalClustering(list_of_clusters[:10])
     printDendrogram(dendrogram)
 
 
