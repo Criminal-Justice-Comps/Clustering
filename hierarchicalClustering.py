@@ -63,11 +63,11 @@ def hammingDistance(vector1, vector2):
 """input(s) two clusters with a numerical and categorical vector. Returns the
     Gower Distance between the two."""
 def gowerDistance(cluster1, cluster2):
-    euclid_distance = gowerNumeric(cluster1.num_vector,
+    numeric_distance = gowerNumeric(cluster1.num_vector,
                                     cluster2.num_vector)
     categorical_distance = hammingDistance(cluster1.cat_vector,
                                     cluster2.cat_vector)/len(cluster1.cat_vector)
-    distance = euclid_distance + categorical_distance
+    distance = numeric_distance + categorical_distance
     return distance
 
 """input(s) a cluster and returns whether or not it has any children"""
@@ -165,11 +165,11 @@ def maxLink(list_of_clusters):
                     closest_clusters = (i, j)
         return closest_clusters
 class Cluster:
-  def __init__(self, numerical_vector, categorical_vector = None,
+  def __init__(self, numerical_vector, other_info = None,categorical_vector = None,
                 children = None):
     self.num_vector = numerical_vector
     self.cat_vector = categorical_vector
-    #self.other_info = other_info
+    self.other_info = other_info
     self.children = children
     self.parent = None
 
@@ -177,6 +177,7 @@ def printCluster(cluster):
     print("Memory address for following cluster is: ", cluster)
     print("Numerical Vector: ", cluster.num_vector)
     print("Categorical Vector: ", cluster.cat_vector)
+    print("Other(decile_score, person_id): ", cluster.other_info)
     print("Children: ", cluster.children)
     print("Parent: ", cluster.parent)
     print()
@@ -191,7 +192,7 @@ def printDendrogram(dendrogram):
 def createNewCluster(cluster1, cluster2):
 
     list_of_chldren = [cluster1, cluster2]
-    newCluster = Cluster(None, None, list_of_chldren)
+    newCluster = Cluster(None, None, None, list_of_chldren)
     cluster1.parent = newCluster
     cluster2.parent = newCluster
     return newCluster
@@ -230,10 +231,10 @@ def loadData():
                 keys_numeric = line.split(",")
                 continue
             num_data = line.split(",") #split the line we are on into individual features
-
+            other_info = []
             ''' REMOVE THE FEATURES WE DON'T WANT'''
-            num_data.pop(keys_numeric.index("decile_score")) 
-            num_data.pop(keys_numeric.index("person_id")) 
+            other_info.append(num_data.pop(keys_numeric.index("decile_score")))
+            other_info.append(num_data.pop(keys_numeric.index("person_id")))
             ''' REMOVE THE FEATURES WE DON'T WANT'''
 
             #Set global variables MINIMUM and MAXIMUM-- these are used for Gowers Distance
@@ -249,7 +250,7 @@ def loadData():
                     MAXIMUM[i] = num_data[i]
                 if num_data[i] < MINIMUM[i]:
                     MINIMUM[i] = num_data[i]
-            list_of_clusters.append(Cluster(num_data)) #create the cluster and add it to our list of clusters
+            list_of_clusters.append(Cluster(num_data, other_info)) #create the cluster and add it to our list of clusters
     for q in range(len(MAXIMUM)): #calculation to get the range of each numeric feature (used for gowers distance)
         RANGE.append(MAXIMUM[q] - MINIMUM[q])
     csvfile.close()
@@ -271,14 +272,15 @@ def loadData():
                 #Remove columns we don't want here
                 continue
             cat_data = line.split(",") #split the line we are on into individual features
+            cat_data.pop(keys_categorical.index("person_id"))
             list_of_clusters[i].cat_vector = cat_data
             i += 1 #This allows us to update the categorical vector, necesary since we already made the cluster above
     return list_of_clusters
 
 def main():
-    
+
     cluster_list = loadData()
-    dendrogram = hierarchicalClustering(cluster_list[:10])
+    dendrogram = hierarchicalClustering(cluster_list)
     printDendrogram(dendrogram)
 
 
