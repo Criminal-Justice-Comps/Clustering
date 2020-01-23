@@ -44,7 +44,13 @@ def euclideanDistance(vector1, vector2):
          distance += pow(abs(vector1[i]) - abs(vector2[i]), 2)
     distance = math.sqrt(distance)
     return distance
-
+"""input(s) two numeric vectors/lists. Returns a distance between the two"""
+def gowerNumeric(vector1, vector2):
+    assert(len(vector1) == len(vector2)), "Different size vectors"
+    distance = 0
+    for i in range(len(vector1)):
+         distance += abs(abs(vector1[i]) - abs(vector2[i]))/RANGE[i]
+    return distance
 """input(s) two categorical vectors/lists. Returns the hamming distance"""
 def hammingDistance(vector1, vector2):
     assert(len(vector1) == len(vector2)), "Different size vectors"
@@ -57,7 +63,7 @@ def hammingDistance(vector1, vector2):
 """input(s) two clusters with a numerical and categorical vector. Returns the
     Gower Distance between the two."""
 def gowerDistance(cluster1, cluster2):
-    euclid_distance = euclideanDistance(cluster1.num_vector,
+    euclid_distance = gowerNumeric(cluster1.num_vector,
                                     cluster2.num_vector)
     categorical_distance = hammingDistance(cluster1.cat_vector,
                                     cluster2.cat_vector)/len(cluster1.cat_vector)
@@ -159,10 +165,11 @@ def maxLink(list_of_clusters):
                     closest_clusters = (i, j)
         return closest_clusters
 class Cluster:
-  def __init__(self, numerical_vector, categorical_vector = None,
+  def __init__(self, numerical_vector, other_info, categorical_vector = None,
                 children = None):
     self.num_vector = numerical_vector
     self.cat_vector = categorical_vector
+    self.other_info = other_info
     self.children = children
     self.parent = None
 
@@ -212,7 +219,7 @@ def main():
     is_first = 1
     list_of_clusters = []
     keys = []
-    with open ('../datasets/NumericFeaturesData.csv', mode='r') as csvfile:
+    with open ('../datasets/TrainValidateTest/TrainNumericFeatures.csv', mode='r') as csvfile:
         for line in csvfile:
             #If it's the first line, get the column headers into "keys"
             if is_first:
@@ -240,14 +247,12 @@ def main():
     for q in range(len(MAXIMUM)): #calculation to get the range of each numeric feature (used for gowers distance)
         RANGE.append(MAXIMUM[q] - MINIMUM[q])
     csvfile.close()
-
     keys_categorical = []
     cat_data = []
+    is_first = 1
     i = 0
-    print(len(list_of_clusters))
-    with open ('../datasets/CategoricalFeaturesData.csv', mode='r') as csvfile:
+    with open ('../datasets/TrainValidateTest/TrainCategoricalFeatures.csv', mode='r') as csvfile:
         for line in csvfile:
-            print(i)
             #If it's the first line, get the column headers into "keys"
             if is_first:
                 is_first = 0
@@ -258,7 +263,6 @@ def main():
             cat_data = line.split(",") #split the line we are on into individual features
             list_of_clusters[i].cat_vector = cat_data
             i += 1
-    printCluster(list_of_clusters[0])
     dendrogram = hierarchicalClustering(list_of_clusters[:10])
     printDendrogram(dendrogram)
 
