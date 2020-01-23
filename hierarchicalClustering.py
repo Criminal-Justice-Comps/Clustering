@@ -165,11 +165,11 @@ def maxLink(list_of_clusters):
                     closest_clusters = (i, j)
         return closest_clusters
 class Cluster:
-  def __init__(self, numerical_vector, other_info, categorical_vector = None,
+  def __init__(self, numerical_vector, categorical_vector = None,
                 children = None):
     self.num_vector = numerical_vector
     self.cat_vector = categorical_vector
-    self.other_info = other_info
+    #self.other_info = other_info
     self.children = children
     self.parent = None
 
@@ -213,9 +213,10 @@ def hierarchicalClustering(data, radius = None):
     data.append(newCluster)
     return hierarchicalClustering(data)
 
-def main():
+'''Doesn't take input, just loads the data into clusters'''
+def loadData():
+
     #open some CSV file, read through it, and create a matrix of vectors
-    #assume numerical data only for now
     is_first = 1
     list_of_clusters = []
     keys = []
@@ -247,6 +248,9 @@ def main():
     for q in range(len(MAXIMUM)): #calculation to get the range of each numeric feature (used for gowers distance)
         RANGE.append(MAXIMUM[q] - MINIMUM[q])
     csvfile.close()
+    '''
+    NOW LOADING THE CATEGORICAL DATA
+    '''
     keys_categorical = []
     cat_data = []
     is_first = 1
@@ -263,7 +267,12 @@ def main():
             cat_data = line.split(",") #split the line we are on into individual features
             list_of_clusters[i].cat_vector = cat_data
             i += 1
-    dendrogram = hierarchicalClustering(list_of_clusters[:10])
+    return list_of_clusters
+
+def main():
+    
+    cluster_list = loadData()
+    dendrogram = hierarchicalClustering(cluster_list[:10])
     printDendrogram(dendrogram)
 
 
