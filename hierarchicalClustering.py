@@ -213,24 +213,29 @@ def hierarchicalClustering(data, radius = None):
     data.append(newCluster)
     return hierarchicalClustering(data)
 
+
+
 '''Doesn't take input, just loads the data into clusters'''
 def loadData():
 
     #open some CSV file, read through it, and create a matrix of vectors
     is_first = 1
     list_of_clusters = []
-    keys = []
-    with open ('../datasets/TrainValidateTest/TrainNumericFeatures.csv', mode='r') as csvfile:
+    keys_numeric = []
+    with open ('../datasets/NumericFeaturesData.csv', mode='r') as csvfile:
         for line in csvfile:
             #If it's the first line, get the column headers into "keys"
             if is_first:
                 is_first = 0
-                keys = line.split(",")
-                print(keys)
+                keys_numeric = line.split(",")
                 continue
             num_data = line.split(",") #split the line we are on into individual features
-            num_data.pop(keys.index("decile_score")) # remove the features we don't want
-            num_data.pop(keys.index("person_id")) # remove the features we don't want
+
+            ''' REMOVE THE FEATURES WE DON'T WANT'''
+            num_data.pop(keys_numeric.index("decile_score")) 
+            num_data.pop(keys_numeric.index("person_id")) 
+            ''' REMOVE THE FEATURES WE DON'T WANT'''
+
             #Set global variables MINIMUM and MAXIMUM-- these are used for Gowers Distance
             if MINIMUM == []:
                 for i in range(len(num_data)):
@@ -249,24 +254,25 @@ def loadData():
         RANGE.append(MAXIMUM[q] - MINIMUM[q])
     csvfile.close()
     '''
+    *********************************
     NOW LOADING THE CATEGORICAL DATA
+    *********************************
     '''
     keys_categorical = []
     cat_data = []
     is_first = 1
     i = 0
-    with open ('../datasets/TrainValidateTest/TrainCategoricalFeatures.csv', mode='r') as csvfile:
+    with open ('../datasets/CategoricalFeaturesData.csv', mode='r') as csvfile:
         for line in csvfile:
             #If it's the first line, get the column headers into "keys"
             if is_first:
                 is_first = 0
                 keys_categorical = line.split(",")
                 #Remove columns we don't want here
-                print(keys_categorical)
                 continue
             cat_data = line.split(",") #split the line we are on into individual features
             list_of_clusters[i].cat_vector = cat_data
-            i += 1
+            i += 1 #This allows us to update the categorical vector, necesary since we already made the cluster above
     return list_of_clusters
 
 def main():
