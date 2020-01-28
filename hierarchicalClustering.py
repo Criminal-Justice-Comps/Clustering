@@ -1,9 +1,28 @@
+'''
+Code written by a Carleton College COMPS group for our study on algorithms in the criminal justice system.
+All code is original.
+Project members are Kellen Dorchen, Emilee Fulton, Carlos Garcia, Cameron Kline-Sharpe, Dillon Lanier and Javin White 
+Written January 28-2020.
+The project advisor was Layla Oesper in the Computer Science department.
+'''
+
 import unittest
 import math
 
 MINIMUM = []
 MAXIMUM = []
 RANGE = []
+'''
+
+
+
+*********************************************************************
+THIS CODE IS NOT IN USE, ALLOWS THE CALCULATION OF EUCLIDEAN DISTANCE
+*********************************************************************
+
+
+
+
 """input(s) a list of numerical data to be recognized as a vector and outputs
     the magnitude for the given vector1"""
 def magnitude(vector):
@@ -44,6 +63,18 @@ def euclideanDistance(vector1, vector2):
          distance += pow(abs(vector1[i]) - abs(vector2[i]), 2)
     distance = math.sqrt(distance)
     return distance
+
+
+
+*********************************************************************
+THIS CODE IS NOT IN USE, ALLOWS THE CALCULATION OF EUCLIDEAN DISTANCE
+*********************************************************************
+
+
+
+
+'''
+
 """input(s) two numeric vectors/lists. Returns a distance between the two"""
 def gowerNumeric(vector1, vector2):
     assert(len(vector1) == len(vector2)), "Different size vectors"
