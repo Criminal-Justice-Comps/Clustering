@@ -106,8 +106,8 @@ def compareChildrenMin(children1, children2):
                         min_dist = dist
     return min_dist
 
-"""goes through a list of clusters and gets the indexes of the two closest
-    clusters according to single-link/min-link"""
+"""INPUT: A list of clusters 
+	OUTPUT: Indexes of the two closest clusters according to single-link/min-link"""
 def minLink(list_of_clusters):
     min_dist = math.inf
     closest_clusters = None
@@ -128,8 +128,7 @@ def compareChildrenMax(children1, children2):
     #basecase
     if not hasChildren(children1):
         if not hasChildren(children2):
-            dist = euclideanDistance(children1.num_vector,
-                                            children2.num_vector)
+            dist = gowerDistance(children1, children2)
             return dist
 
         else:
@@ -152,18 +151,70 @@ def compareChildrenMax(children1, children2):
                     max_dist = dist
     return max_dist
 
+'''Also known as complete-link.
+	INPUT: list of clusters
+	OUTPUT: Indexes of two clusters we want to combine based on the max-link rules'''
 def maxLink(list_of_clusters):
-        max_dist = -math.inf
-        closest_clusters = None
-        for i in range(len(list_of_clusters)):
-            for j in range(i+1, len(list_of_clusters)):
-                cluster_i = list_of_clusters[i]
-                cluster_j = list_of_clusters[j]
-                dist = compareChildrenMin(cluster_i, cluster_j)
-                if(dist > max_dist):
-                    max_dist = dist
-                    closest_clusters = (i, j)
-        return closest_clusters
+    max_dist = -math.inf
+    closest_clusters = None
+    for i in range(len(list_of_clusters)):
+        for j in range(i+1, len(list_of_clusters)):
+            cluster_i = list_of_clusters[i]
+            cluster_j = list_of_clusters[j]
+            dist = compareChildrenMin(cluster_i, cluster_j)
+            if(dist > max_dist):
+                max_dist = dist
+                closest_clusters = (i, j)
+    return closest_clusters
+
+"""input(s) two clusters. 
+	OUTPUT: the average_dist between them"""
+def compareChildrenAverage(children1, children2):
+	Av_dist = 0
+	dist = None
+	size_cluster_1 = 1 #keep track of how many data points in the clusters
+	size_cluster_2 = 1
+	#basecase
+	if not hasChildren(children1):
+		if not hasChildren(children2):
+			dist = gowerDistance(children1, children2)
+			return dist
+		else:
+			for child in children2.children:
+				size_cluster_2 += 1
+				dist = compareChildrenAverage(children1, child)
+				Av_dist += dist
+	else:
+		if not hasChildren(children2):
+			size_cluster_1 += 1
+			for child in children1.children:
+				dist = compareChildrenMax(child, children2)
+				Av_dist += dist
+		else:
+			size_cluster_2 += 1
+			size_cluster_1 += 1
+			for child in children1.children:
+				for other_child in children2.children:
+					dist = compareChildrenMax(child, other_child)
+					Av_dist += dist
+	print(Av_dist * (1/ (size_cluster_1 * size_cluster_2)))
+	return Av_dist * (1/ (size_cluster_1 * size_cluster_2)) 
+
+'''	INPUT: list of clusters
+	OUTPUT: Indexes of two clusters we want to combine based on the Average-link rules'''
+def averageLink(list_of_clusters):
+	Mindistance = math.inf
+	closest_clusters = None
+	for i in range(len(list_of_clusters)):
+		for j in range(i+1, len(list_of_clusters)):
+			cluster_i = list_of_clusters[i]
+			cluster_j = list_of_clusters[j]
+			dist = compareChildrenAverage(cluster_i, cluster_j)
+			if(dist < Mindistance):
+				Mindistance = dist
+				closest_clusters = (i, j)
+	return closest_clusters
+
 class Cluster:
   def __init__(self, numerical_vector, other_info = None,categorical_vector = None,
                 children = None):
@@ -182,11 +233,11 @@ def printCluster(cluster):
     print("Parent: ", cluster.parent)
     print()
 
-def printDendrogram(dendrogram):
-    printCluster(dendrogram)
-    if dendrogram.children is not None:
-        for child in dendrogram.children:
-            printDendrogram(child)
+def printTextDendrogram(root_cluster):
+    printCluster(root_cluster)
+    if root_cluster.children is not None:
+        for child in root_cluster.children:
+            printTextDendrogram(child)
 
 """input(s) two clusters that will combine to form a new parent cluster"""
 def createNewCluster(cluster1, cluster2):
@@ -204,8 +255,8 @@ def hierarchicalClustering(data, radius = None):
         only = data[0]
         return only
 
-    #using min-link
-    clustersToCombine = minLink(data)
+    #using max-link
+    clustersToCombine = maxLink(data)
     cluster1 = data[clustersToCombine[0]]
     cluster2 = data[clustersToCombine[1]]
     data.remove(cluster1)
@@ -280,8 +331,8 @@ def loadData():
 def main():
 
     cluster_list = loadData()
-    dendrogram = hierarchicalClustering(cluster_list)
-    printDendrogram(dendrogram)
+    root_cluster = hierarchicalClustering(cluster_list[0:3])
+    printTextDendrogram(root_cluster)
 
 
 if __name__ == '__main__':
