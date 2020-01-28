@@ -283,8 +283,8 @@ def hierarchicalClustering(data, radius = None):
     if(len(data) == 0):
         return None
     if(len(data) == 1):
-        only = data[0]
-        return only
+        root_cluster = data[0]
+        return root_cluster
 
     #using max-link
     clustersToCombine = maxLink(data)
@@ -298,18 +298,23 @@ def hierarchicalClustering(data, radius = None):
 
 
 
-'''Doesn't take input, just loads the data into clusters'''
+'''INPUT: Data from our .csv files
+	OUTPUT: a list of clusters, each cluster represents a person in our .csv files'''
 def loadData():
+	'''
+    *********************************
+    NOW LOADING THE NUMERIC DATA
+    *********************************
+    '''
 
-    #open some CSV file, read through it, and create a matrix of vectors
-    is_first = 1
+    is_first = 1 #bool to know if its the headers (ie age, # of offenses)
     list_of_clusters = []
     keys_numeric = []
     with open ('../datasets/NumericFeaturesData.csv', mode='r') as csvfile:
         for line in csvfile:
             #If it's the first line, get the column headers into "keys"
             if is_first:
-                is_first = 0
+                is_first = 0 
                 keys_numeric = line.split(",")
                 continue
             num_data = line.split(",") #split the line we are on into individual features
