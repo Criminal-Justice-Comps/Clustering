@@ -1,7 +1,7 @@
 '''
 Code written by a Carleton College COMPS group for our study on algorithms in the criminal justice system.
 All code is original.
-Project members are Kellen Dorchen, Emilee Fulton, Carlos Garcia, Cameron Kline-Sharpe, Dillon Lanier and Javin White 
+Project members are Kellen Dorchen, Emilee Fulton, Carlos Garcia, Cameron Kline-Sharpe, Dillon Lanier and Javin White
 Written January 28-2020.
 The project advisor was Layla Oesper in the Computer Science department.
 '''
@@ -12,6 +12,34 @@ import math
 MINIMUM = []
 MAXIMUM = []
 RANGE = []
+"""Goal: transform results from clustering into a dendrogram using packages
+        installed packages include igraph, plotly, and scipy"""
+
+"""https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html#scipy.cluster.hierarchy.linkage"""
+import scipy.cluster.hierarchy as shc
+import matplotlib.pyplot as plt
+Z = []
+"""--------From URL above--------"""
+"""Need a matrix Z such that At the i-th iteration, clusters with
+indices Z[i, 0] and Z[i, 1] are combined to form cluster n + i. 
+**A cluster with an *index* less than n corresponds to one of the n original observations.**
+The distance between clusters Z[i, 0] and Z[i, 1] is given by Z[i, 2].
+The fourth value Z[i, 3] represents the number of original observations(?)
+in the newly formed cluster."""
+
+'''General Structure for Z(?):
+
+                    [ [ a, b, d(a, b), ? ]
+                      [ c, e, d(c, e), ? ]
+                      [ f, g, d(f, g), ? ]
+                      [ h, i, d(h, i), ? ]
+                      [ j, k, d(j, k), ? ]
+                      [ l, m, d(l, m), ? ] ]
+
+the letters are the idNumbers of the individuals(?),
+count the number of newly formed clusters and add that to total datapoints to
+get id of formed cluster,
+'''
 '''
 
 
@@ -137,7 +165,7 @@ def compareChildrenMin(children1, children2):
                         min_dist = dist
     return min_dist
 
-"""INPUT: A list of clusters 
+"""INPUT: A list of clusters
 	OUTPUT: Indexes of the two closest clusters according to single-link/min-link"""
 def minLink(list_of_clusters):
     min_dist = math.inf
@@ -198,7 +226,7 @@ def maxLink(list_of_clusters):
                 closest_clusters = (i, j)
     return closest_clusters
 
-"""input(s) two clusters. 
+"""input(s) two clusters.
 	OUTPUT: the average_dist between them"""
 def compareChildrenAverage(children1, children2):
 	Av_dist = 0
@@ -229,7 +257,7 @@ def compareChildrenAverage(children1, children2):
 					dist = compareChildrenMax(child, other_child)
 					Av_dist += dist
 	print(Av_dist * (1/ (size_cluster_1 * size_cluster_2)))
-	return Av_dist * (1/ (size_cluster_1 * size_cluster_2)) 
+	return Av_dist * (1/ (size_cluster_1 * size_cluster_2))
 
 '''	INPUT: list of clusters
 	OUTPUT: Indexes of two clusters we want to combine based on the Average-link rules'''
@@ -247,8 +275,8 @@ def averageLink(list_of_clusters):
 	return closest_clusters
 
 class Cluster:
-  def __init__(self, numerical_vector, other_info = None,categorical_vector = None,
-                children = None):
+  def __init__(self, numerical_vector, other_info = [],categorical_vector = [],
+                children = []):
     self.num_vector = numerical_vector
     self.cat_vector = categorical_vector
     self.other_info = other_info
@@ -296,8 +324,6 @@ def hierarchicalClustering(data, radius = None):
     data.append(newCluster)
     return hierarchicalClustering(data)
 
-
-
 '''INPUT: Data from our .csv files
 	OUTPUT: a list of clusters, each cluster represents a person in our .csv files'''
 def loadData():
@@ -314,7 +340,7 @@ def loadData():
         for line in csvfile:
             #If it's the first line, get the column headers into "keys"
             if is_first:
-                is_first = 0 
+                is_first = 0
                 keys_numeric = line.split(",")
                 continue
             num_data = line.split(",") #split the line we are on into individual features
