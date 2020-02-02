@@ -21,7 +21,7 @@ import matplotlib.pyplot as plt
 Z = []
 """--------From URL above--------"""
 """Need a matrix Z such that At the i-th iteration, clusters with
-indices Z[i, 0] and Z[i, 1] are combined to form cluster n + i. 
+indices Z[i, 0] and Z[i, 1] are combined to form cluster n + i.
 **A cluster with an *index* less than n corresponds to one of the n original observations.**
 The distance between clusters Z[i, 0] and Z[i, 1] is given by Z[i, 2].
 The fourth value Z[i, 3] represents the number of original observations(?)
@@ -178,7 +178,7 @@ def minLink(list_of_clusters):
             if(dist < min_dist):
                 min_dist = dist
                 closest_clusters = (i, j)
-    return closest_clusters
+    return closest_clusters, min_dist
 
 """input(s) two clusters. Return the max_dist between them"""
 def compareChildrenMax(children1, children2):
@@ -220,11 +220,11 @@ def maxLink(list_of_clusters):
         for j in range(i+1, len(list_of_clusters)):
             cluster_i = list_of_clusters[i]
             cluster_j = list_of_clusters[j]
-            dist = compareChildrenMin(cluster_i, cluster_j)
+            dist = compareChildrenMax(cluster_i, cluster_j)
             if(dist > max_dist):
                 max_dist = dist
                 closest_clusters = (i, j)
-    return closest_clusters
+    return closest_clusters, max_dist
 
 """input(s) two clusters.
 	OUTPUT: the average_dist between them"""
@@ -272,7 +272,7 @@ def averageLink(list_of_clusters):
 			if(dist < Mindistance):
 				Mindistance = dist
 				closest_clusters = (i, j)
-	return closest_clusters
+	return closest_clusters, Mindistance
 
 class Cluster:
   def __init__(self, numerical_vector, other_info = [],categorical_vector = [],
@@ -315,9 +315,10 @@ def hierarchicalClustering(data, radius = None):
         return root_cluster
 
     #using max-link
-    clustersToCombine = maxLink(data)
+    clustersToCombine, corr_distance = maxLink(data)
     cluster1 = data[clustersToCombine[0]]
     cluster2 = data[clustersToCombine[1]]
+    #Z.append([cluster1.id, cluster2.id, corr_distance, ?])
     data.remove(cluster1)
     data.remove(cluster2)
     newCluster = createNewCluster(cluster1, cluster2)
