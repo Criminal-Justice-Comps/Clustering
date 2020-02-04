@@ -12,7 +12,7 @@ import math
 MINIMUM = []
 MAXIMUM = []
 RANGE = []
-SIZE = 8818
+SIZE = float(150)
 """Goal: transform results from clustering into a dendrogram using packages
 		installed packages include igraph, plotly, and scipy"""
 
@@ -132,7 +132,7 @@ def gowerDistance(cluster1, cluster2):
 
 """input(s) a cluster and returns whether or not it has any children"""
 def hasChildren(cluster):
-	if cluster.children is not None:
+	if cluster.children != []:
 		return True
 	return False
 
@@ -304,6 +304,7 @@ def printTextDendrogram(root_cluster):
 """input(s) two clusters that will combine to form a new parent cluster"""
 def createNewCluster(cluster1, cluster2):
 
+	global SIZE
 	SIZE += 1
 	list_of_chldren = [cluster1, cluster2]
 	newCluster = Cluster(None, SIZE, None, None, list_of_chldren)
@@ -320,9 +321,10 @@ def hierarchicalClustering(data, radius = None):
 
 	#using max-link
 	clustersToCombine, corr_distance = maxLink(data)
+	print(clustersToCombine)
 	cluster1 = data[clustersToCombine[0]]
 	cluster2 = data[clustersToCombine[1]]
-	Z.append([cluster1.id, cluster2.id, corr_distance, 0])
+	Z.append([cluster1.id, cluster2.id, float(corr_distance), 0.0])
 	data.remove(cluster1)
 	data.remove(cluster2)
 	newCluster = createNewCluster(cluster1, cluster2)
@@ -367,7 +369,7 @@ def loadData():
 					MAXIMUM[i] = num_data[i]
 				if num_data[i] < MINIMUM[i]:
 					MINIMUM[i] = num_data[i]
-			list_of_clusters.append(Cluster(num_data, ID, other_info)) #create the cluster and add it to our list of clusters
+			list_of_clusters.append(Cluster(num_data, float(ID), other_info)) #create the cluster and add it to our list of clusters
 	for q in range(len(MAXIMUM)): #calculation to get the range of each numeric feature (used for gowers distance)
 		RANGE.append(MAXIMUM[q] - MINIMUM[q])
 	csvfile.close()
@@ -397,8 +399,11 @@ def loadData():
 def main():
 
 	cluster_list = loadData()
-	root_cluster = hierarchicalClustering(cluster_list[0:3])
+	root_cluster = hierarchicalClustering(cluster_list[:150])
 	printTextDendrogram(root_cluster)
+	dend = shc.dendrogram(Z)
+	plt.axhline(y=30, color='r', linestyle='--')
+	plt.show() #show the dendrogram
 
 
 if __name__ == '__main__':
