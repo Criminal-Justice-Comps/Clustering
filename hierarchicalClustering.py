@@ -276,14 +276,14 @@ def averageLink(list_of_clusters):
 	return closest_clusters, Mindistance
 
 class Cluster:
-  def __init__(self, numerical_vector, ID, other_info = [],categorical_vector = [],
-				children = []):
-  	self.num_vector = numerical_vector
-  	self.id = ID
-  	self.cat_vector = categorical_vector
-  	self.other_info = other_info
-  	self.children = children
-  	self.parent = None
+  def __init__(self, numerical_vector, ID, other_info = [],categorical_vector = [], children = []):
+	  self.num_vector = numerical_vector
+	  self.id = ID
+	  self.cat_vector = categorical_vector
+	  self.other_info = other_info
+	  self.children = children
+	  self.parent = None
+	  self.observations = 1
 
 def printCluster(cluster):
 	print("Memory address for following cluster is: ", cluster)
@@ -308,6 +308,7 @@ def createNewCluster(cluster1, cluster2):
 	SIZE += 1
 	list_of_chldren = [cluster1, cluster2]
 	newCluster = Cluster(None, SIZE, None, None, list_of_chldren)
+	newCluster.observations = cluster1.observations + cluster2.observations
 	cluster1.parent = newCluster
 	cluster2.parent = newCluster
 	return newCluster
@@ -324,10 +325,10 @@ def hierarchicalClustering(data, radius = None):
 	print(clustersToCombine)
 	cluster1 = data[clustersToCombine[0]]
 	cluster2 = data[clustersToCombine[1]]
-	Z.append([cluster1.id, cluster2.id, float(corr_distance), 0.0])
 	data.remove(cluster1)
 	data.remove(cluster2)
 	newCluster = createNewCluster(cluster1, cluster2)
+	Z.append([cluster1.id, cluster2.id, float(corr_distance), newCluster.observations])
 	data.append(newCluster)
 	return hierarchicalClustering(data)
 
@@ -400,7 +401,7 @@ def main():
 
 	cluster_list = loadData()
 	root_cluster = hierarchicalClustering(cluster_list[:150])
-	printTextDendrogram(root_cluster)
+	#printTextDendrogram(root_cluster)
 	dend = shc.dendrogram(Z)
 	plt.axhline(y=30, color='r', linestyle='--')
 	plt.show() #show the dendrogram
