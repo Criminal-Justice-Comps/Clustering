@@ -321,14 +321,14 @@ def hierarchicalClustering(data, radius = None):
 		return root_cluster
 
 	#using max-link
-	clustersToCombine, corr_distance = maxLink(data)
-	print(clustersToCombine)
+	clustersToCombine, corr_distance = minLink(data)
+	#print(clustersToCombine)
 	cluster1 = data[clustersToCombine[0]]
 	cluster2 = data[clustersToCombine[1]]
 	data.remove(cluster1)
 	data.remove(cluster2)
 	newCluster = createNewCluster(cluster1, cluster2)
-	Z.append([cluster1.id, cluster2.id, float(corr_distance), newCluster.observations])
+	Z.append([float(cluster1.id), float(cluster2.id), float(corr_distance), float(newCluster.observations)])
 	data.append(newCluster)
 	return hierarchicalClustering(data)
 
@@ -402,7 +402,9 @@ def main():
 	cluster_list = loadData()
 	root_cluster = hierarchicalClustering(cluster_list[:150])
 	#printTextDendrogram(root_cluster)
-	dend = shc.dendrogram(Z)
+	Zprime = shc.linkage(Z, method='average', metric='hamming')
+	print(Z)
+	dend = shc.dendrogram(Zprime)
 	plt.axhline(y=30, color='r', linestyle='--')
 	plt.show() #show the dendrogram
 
