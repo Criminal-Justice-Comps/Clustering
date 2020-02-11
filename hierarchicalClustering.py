@@ -19,6 +19,7 @@ SIZE = float(150)
 """https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html#scipy.cluster.hierarchy.linkage"""
 import scipy.cluster.hierarchy as shc
 import matplotlib.pyplot as plt
+
 Z = []
 """--------From URL above--------"""
 """Need a matrix Z such that At the i-th iteration, clusters with
@@ -257,7 +258,6 @@ def compareChildrenAverage(children1, children2):
 				for other_child in children2.children:
 					dist = compareChildrenMax(child, other_child)
 					Av_dist += dist
-	print(Av_dist * (1/ (size_cluster_1 * size_cluster_2)))
 	return Av_dist * (1/ (size_cluster_1 * size_cluster_2))
 
 '''	INPUT: list of clusters
@@ -305,32 +305,39 @@ def printTextDendrogram(root_cluster):
 def createNewCluster(cluster1, cluster2):
 
 	global SIZE
-	SIZE += 1
 	list_of_chldren = [cluster1, cluster2]
 	newCluster = Cluster(None, SIZE, None, None, list_of_chldren)
+	SIZE += 1
 	newCluster.observations = cluster1.observations + cluster2.observations
 	cluster1.parent = newCluster
 	cluster2.parent = newCluster
 	return newCluster
 
-def hierarchicalClustering(data, radius = None):
+def hierarchicalClustering(data, linkageMethod = "complete"):
 	if(len(data) == 0):
 		return None
 	if(len(data) == 1):
 		root_cluster = data[0]
+
 		return root_cluster
 
-	#using max-link
-	clustersToCombine, corr_distance = minLink(data)
-	#print(clustersToCombine)
+	# clustersToCombine = None
+	# corr_distance = 0
+	# if linkageMethod == "single":
+	# 	clustersToCombine, corr_distance = minLink(data)
+	# elif linkageMethod == "complete":
+	# 	clustersToCombine, corr_distance = maxLink(data)
+	# elif linkageMethod == "average":
+	#
+	clustersToCombine, corr_distance = averageLink(data)
 	cluster1 = data[clustersToCombine[0]]
 	cluster2 = data[clustersToCombine[1]]
 	data.remove(cluster1)
 	data.remove(cluster2)
 	newCluster = createNewCluster(cluster1, cluster2)
-	Z.append([float(cluster1.id), float(cluster2.id), float(corr_distance), float(newCluster.observations)])
+	Z.append([int(cluster1.id), int(cluster2.id), float(corr_distance), int(newCluster.observations)])
 	data.append(newCluster)
-	return hierarchicalClustering(data)
+	return hierarchicalClustering(data, linkageMethod)
 
 '''INPUT: Data from our .csv files
 	OUTPUT: a list of clusters, each cluster represents a person in our .csv files'''
@@ -343,6 +350,7 @@ def loadData():
 	is_first = 1 #bool to know if its the headers (ie age, # of offenses)
 	list_of_clusters = []
 	keys_numeric = []
+	new_id = 0
 	with open ('../datasets/NumericFeaturesData.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
@@ -370,7 +378,8 @@ def loadData():
 					MAXIMUM[i] = num_data[i]
 				if num_data[i] < MINIMUM[i]:
 					MINIMUM[i] = num_data[i]
-			list_of_clusters.append(Cluster(num_data, float(ID), other_info)) #create the cluster and add it to our list of clusters
+			list_of_clusters.append(Cluster(num_data, new_id, other_info)) #create the cluster and add it to our list of clusters
+			new_id += 1
 	for q in range(len(MAXIMUM)): #calculation to get the range of each numeric feature (used for gowers distance)
 		RANGE.append(MAXIMUM[q] - MINIMUM[q])
 	csvfile.close()
@@ -397,15 +406,35 @@ def loadData():
 			i += 1 #This allows us to update the categorical vector, necesary since we already made the cluster above
 	return list_of_clusters
 
-def main():
+import sys
+import argparse
+import csv
+'''
+def parse_args():
 
+    p = argparse.ArgumentParser()
+    p.add_argument("--linkageMethod", help="choices: single, complete, average")
+    args = p.parse_args()
+    return args
+'''
+def saveData(Z):
+	with open("averageMatrix.csv", "w") as f:
+		writer = csv.writer(f)
+		writer.writerows(Z)
+
+def main():
+	#args = parse_args()
+	global Z
+	global SIZE
 	cluster_list = loadData()
-	root_cluster = hierarchicalClustering(cluster_list[:150])
+	SIZE = len(cluster_list)
+	root_cluster = hierarchicalClustering(cluster_list)
+	saveData(Z)
+	plt.figure(figsize = (16,9))
 	#printTextDendrogram(root_cluster)
-	Zprime = shc.linkage(Z, method='average', metric='hamming')
-	print(Z)
-	dend = shc.dendrogram(Zprime)
-	plt.axhline(y=30, color='r', linestyle='--')
+	#print(Z)
+	dend = shc.dendrogram(Z)
+	plt.axhline(y=2.0, color='r', linestyle='--')
 	plt.show() #show the dendrogram
 
 
