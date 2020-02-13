@@ -132,9 +132,6 @@ def gowerDistance(cluster1, cluster2):
 
 	distance = numeric_distance + categorical_distance
 	distance = distance / (len(cluster1.num_vector) + len(cluster1.cat_vector))
-	print("Numeric: ", numeric_distance,"|", "Categorical: ", categorical_distance, "|", distance)
-	# if distance > 1:
-	# 	print("distance greater than 1!: ", distance, cluster1.id, cluster2.id)
 	return distance
 
 """input(s) a cluster and returns whether or not it has any children"""
@@ -357,7 +354,7 @@ def loadData():
 	list_of_clusters = []
 	keys_numeric = []
 	new_id = 0
-	with open ('../datasets/TrainValidateTest/TrainFeaturesNumeric.csv', mode='r') as csvfile:
+	with open ('../datasets/TrainValidateTest/TrainFeaturesNumericCl.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
 			if is_first:
@@ -428,6 +425,15 @@ def saveData(Z):
 		writer = csv.writer(f)
 		writer.writerows(Z)
 
+def getLeaves(cluster):
+	list_of_datapoints = []
+	#run DFS to get leaves/datapoints
+	return list_of_datapoints
+def saveCluster(cluster, saveAs):
+	datapoints = getLeaves(cluster)
+	with open(saveAs+".csv", "w") as f:
+		writer = csv.writer(f)
+		writer.writerows(datapoints)
 def main():
 	#args = parse_args()
 	global Z
@@ -436,10 +442,14 @@ def main():
 	SIZE = 150
 	root_cluster = hierarchicalClustering(cluster_list[:150])
 	saveData(Z)
+	cluster1 = root_cluster.children[0]
+	cluster2 = root_cluster.children[1].children[0]
+	cluster3 = root_cluster.children[1].children[1]
+	saveCluster(cluster1, "cluster1")
+	saveCluster(cluster2, "cluster2")
+	saveCluster(cluster3, "cluster3")
 	#print(shc.maxdists(Z))
 	plt.figure(figsize = (16,9))
-	#printTextDendrogram(root_cluster)
-	#print(Z)
 	dend = shc.dendrogram(Z)
 	plt.axhline(y=2.0, color='r', linestyle='--')
 	plt.show() #show the dendrogram
