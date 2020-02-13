@@ -110,8 +110,9 @@ def gowerNumeric(vector1, vector2):
 	assert(len(vector1) == len(vector2)), "Different size vectors"
 	distance = 0
 	for i in range(len(vector1)):
-		 distance += abs(abs(vector1[i]) - abs(vector2[i]))/RANGE[i]
+		 distance += abs(vector1[i] - vector2[i])/RANGE[i]
 	return distance
+
 """input(s) two categorical vectors/lists. Returns the hamming distance"""
 def hammingDistance(vector1, vector2):
 	assert(len(vector1) == len(vector2)), "Different size vectors"
@@ -127,8 +128,13 @@ def gowerDistance(cluster1, cluster2):
 	numeric_distance = gowerNumeric(cluster1.num_vector,
 									cluster2.num_vector)
 	categorical_distance = hammingDistance(cluster1.cat_vector,
-									cluster2.cat_vector)/len(cluster1.cat_vector)
+									cluster2.cat_vector)
+
 	distance = numeric_distance + categorical_distance
+	distance = distance / (len(cluster1.num_vector) + len(cluster1.cat_vector))
+	print("Numeric: ", numeric_distance,"|", "Categorical: ", categorical_distance, "|", distance)
+	# if distance > 1:
+	# 	print("distance greater than 1!: ", distance, cluster1.id, cluster2.id)
 	return distance
 
 """input(s) a cluster and returns whether or not it has any children"""
@@ -351,7 +357,7 @@ def loadData():
 	list_of_clusters = []
 	keys_numeric = []
 	new_id = 0
-	with open ('../datasets/NumericFeaturesData.csv', mode='r') as csvfile:
+	with open ('../datasets/TrainValidateTest/TrainFeaturesNumeric.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
 			if is_first:
@@ -392,7 +398,7 @@ def loadData():
 	cat_data = []
 	is_first = 1
 	i = 0
-	with open ('../datasets/CategoricalFeaturesData.csv', mode='r') as csvfile:
+	with open ('../datasets/TrainValidateTest/TrainFeaturesCategorical.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
 			if is_first:
@@ -427,9 +433,10 @@ def main():
 	global Z
 	global SIZE
 	cluster_list = loadData()
-	SIZE = len(cluster_list)
-	root_cluster = hierarchicalClustering(cluster_list)
+	SIZE = 150
+	root_cluster = hierarchicalClustering(cluster_list[:150])
 	saveData(Z)
+	#print(shc.maxdists(Z))
 	plt.figure(figsize = (16,9))
 	#printTextDendrogram(root_cluster)
 	#print(Z)
