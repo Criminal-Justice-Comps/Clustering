@@ -13,12 +13,14 @@ MINIMUM = []
 MAXIMUM = []
 RANGE = []
 SIZE = float(150)
+KEYS = []
 """Goal: transform results from clustering into a dendrogram using packages
 		installed packages include igraph, plotly, and scipy"""
 
 """https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html#scipy.cluster.hierarchy.linkage"""
 import scipy.cluster.hierarchy as shc
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 Z = []
 """--------From URL above--------"""
@@ -407,6 +409,12 @@ def loadData():
 			cat_data.pop(keys_categorical.index("person_id"))
 			list_of_clusters[i].cat_vector = cat_data
 			i += 1 #This allows us to update the categorical vector, necesary since we already made the cluster above
+	keys_numeric.remove("decile_score")
+	for key in keys_numeric:
+		KEYS.append(key)
+	keys_categorical.remove("person_id")
+	for key in keys_categorical:
+		KEYS.append(key)
 	return list_of_clusters
 
 import sys
@@ -427,13 +435,32 @@ def saveData(Z):
 
 def getLeaves(cluster):
 	list_of_datapoints = []
-	#run DFS to get leaves/datapoints
+	#run BFS to get leaves/datapoints
+	queue = cluster.children
+	while len(queue) != 0:
+		cur_cluster = queue.pop()
+		print(cur_cluster)
+		if cur_cluster.children != []:
+			queue.append(cur_cluster.children[0])
+			queue.append(cur_cluster.children[1])
+		else:
+			data = []
+			data.append(cur_cluster.id)
+			for i in cur_cluster.num_vector:
+				data.append(i)
+			for j in cur_cluster.cat_vector:
+				data.append(j)
+			list_of_datapoints.append(data)
 	return list_of_datapoints
+
 def saveCluster(cluster, saveAs):
-	datapoints = getLeaves(cluster)
+	datapoints = [KEYS]
+	for data in getLeaves(cluster):
+		datapoints.append(data)
 	with open(saveAs+".csv", "w") as f:
 		writer = csv.writer(f)
 		writer.writerows(datapoints)
+
 def main():
 	#args = parse_args()
 	global Z
