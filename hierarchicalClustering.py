@@ -18,8 +18,7 @@ KEYS = []
 FIRST_ITERATION = True
 
 import numpy as np
-distanceMatrix = np.ones((SIZE, SIZE)) * np.inf
-np.fill_diagonal(distanceMatrix, 0)
+distanceMatrix = []
 
 """https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html#scipy.cluster.hierarchy.linkage"""
 import scipy.cluster.hierarchy as shc
@@ -336,7 +335,7 @@ def loadData():
 	list_of_clusters = []
 	keys_numeric = []
 	new_id = 0
-	with open ('../datasets/TrainValidateTest/TrainFeaturesNumericClustering.csv', mode='r') as csvfile:
+	with open ('../datasets/TrainValidateTest/ValidateFeaturesNumericClustering.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
 			if is_first:
@@ -377,7 +376,7 @@ def loadData():
 	cat_data = []
 	is_first = 1
 	i = 0
-	with open ('../datasets/TrainValidateTest/ANA Merged/ANAMergedTrainFeaturesCategorical.csv', mode='r') as csvfile:
+	with open ('../datasets/TrainValidateTest/ANA Merged/ANAMergedValidateFeaturesCategorical.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
 			if is_first:
@@ -401,7 +400,7 @@ def loadData():
 	return list_of_clusters
 
 def saveData(Z):
-	with open("partialAverageMatrix.csv", "w") as f:
+	with open("AverageLinkTrainDataClusterMatrix.csv", "w") as f:
 		writer = csv.writer(f)
 		writer.writerows(Z)
 
@@ -448,18 +447,21 @@ def splitClusters(root, k):
 
 	i = 1
 	for cluster in k_clusters:
-		saveCluster(cluster, "partialDataCluster"+str(i))
+		saveCluster(cluster, "AverageLinkTrainDataCluster"+str(k)+"_"+str(i))
 		i += 1
 
 def main():
 	#args = parse_args()
 	global Z
 	global SIZE
+	global distanceMatrix
 	cluster_list = loadData()
-	SIZE = len(cluster_list[:150])
-	root_cluster = hierarchicalClustering(cluster_list[:150])
+	SIZE = len(cluster_list)
+	distanceMatrix = np.ones((SIZE, SIZE)) * np.inf
+	np.fill_diagonal(distanceMatrix, 0)
+	root_cluster = hierarchicalClustering(cluster_list)
 	saveData(Z)
-	splitClusters(root_cluster, 4)
+	splitClusters(root_cluster, 3)
 	sns.heatmap(distanceMatrix, cmap="BuPu")
 	#print(shc.maxdists(Z))
 	plt.figure(figsize = (16,9))
