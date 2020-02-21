@@ -12,8 +12,14 @@ import math
 MINIMUM = []
 MAXIMUM = []
 RANGE = []
-SIZE = float(150)
+SIZE = int(150)
 KEYS = []
+FIRST_ITERATION = True
+
+import numpy as np
+distanceMatrix = np.ones((SIZE, SIZE)) * np.inf
+np.fill_diagonal(distanceMatrix, 0)
+
 """Goal: transform results from clustering into a dendrogram using packages
 		installed packages include igraph, plotly, and scipy"""
 
@@ -275,6 +281,10 @@ def averageLink(list_of_clusters):
 			cluster_i = list_of_clusters[i]
 			cluster_j = list_of_clusters[j]
 			dist = compareChildrenAverage(cluster_i, cluster_j)
+			if cluster_i.id < SIZE and cluster_j.id < SIZE and FIRST_ITERATION:
+				if distanceMatrix[cluster_i.id, cluster_j.id] == np.inf:
+					distanceMatrix[cluster_i.id, cluster_j.id] = dist
+					distanceMatrix[cluster_j.id, cluster_i.id] = dist
 			if(dist < Mindistance):
 				Mindistance = dist
 				closest_clusters = (i, j)
@@ -325,7 +335,7 @@ def hierarchicalClustering(data, linkageMethod = "complete"):
 		root_cluster = data[0]
 
 		return root_cluster
-
+	global FIRST_ITERATION
 	# clustersToCombine = None
 	# corr_distance = 0
 	# if linkageMethod == "single":
@@ -335,6 +345,7 @@ def hierarchicalClustering(data, linkageMethod = "complete"):
 	# elif linkageMethod == "average":
 	#
 	clustersToCombine, corr_distance = averageLink(data)
+	FIRST_ITERATION = False
 	cluster1 = data[clustersToCombine[0]]
 	cluster2 = data[clustersToCombine[1]]
 	data.remove(cluster1)
@@ -356,7 +367,7 @@ def loadData():
 	list_of_clusters = []
 	keys_numeric = []
 	new_id = 0
-	with open ('../datasets/TrainValidateTest/TrainFeaturesNumericCl.csv', mode='r') as csvfile:
+	with open ('../datasets/TrainValidateTest/TrainFeaturesNumericClustering.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
 			if is_first:
@@ -397,7 +408,7 @@ def loadData():
 	cat_data = []
 	is_first = 1
 	i = 0
-	with open ('../datasets/TrainValidateTest/TrainFeaturesCategorical.csv', mode='r') as csvfile:
+	with open ('../datasets/TrainValidateTest/ANA Merged/ANAMergedTestFeaturesCategorical.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
 			if is_first:
@@ -411,10 +422,11 @@ def loadData():
 			i += 1 #This allows us to update the categorical vector, necesary since we already made the cluster above
 	keys_numeric.remove("decile_score")
 	for key in keys_numeric:
-		KEYS.append(key)
+		KEYS.append(str(key))
 	keys_categorical.remove("person_id")
 	for key in keys_categorical:
-		KEYS.append(key)
+		KEYS.append(str(key))
+	print(KEYS)
 	return list_of_clusters
 
 import sys
@@ -429,7 +441,7 @@ def parse_args():
     return args
 '''
 def saveData(Z):
-	with open("averageMatrix.csv", "w") as f:
+	with open("partialAverageMatrix.csv", "w") as f:
 		writer = csv.writer(f)
 		writer.writerows(Z)
 
@@ -439,7 +451,6 @@ def getLeaves(cluster):
 	queue = cluster.children
 	while len(queue) != 0:
 		cur_cluster = queue.pop()
-		print(cur_cluster)
 		if cur_cluster.children != []:
 			queue.append(cur_cluster.children[0])
 			queue.append(cur_cluster.children[1])
@@ -461,20 +472,35 @@ def saveCluster(cluster, saveAs):
 		writer = csv.writer(f)
 		writer.writerows(datapoints)
 
+def splitClusters(root, k):
+	k_clusters = [root]
+
+	while len(k_clusters) != k:
+		recent_cluster_id = -1
+		index = None
+		for i in range(len(k_clusters)):
+			if k_clusters[i].id > recent_cluster_id:
+				recent_cluster_id = k_clusters[i].id
+				index = i
+		removed = k_clusters.pop(index)
+		k_clusters.append(removed.children[0])
+		k_clusters.append(removed.children[1])
+
+	i = 1
+	for cluster in k_clusters:
+		saveCluster(cluster, "partialDataCluster"+str(i))
+		i += 1
+
 def main():
 	#args = parse_args()
 	global Z
 	global SIZE
 	cluster_list = loadData()
-	SIZE = 150
+	SIZE = len(cluster_list[:150])
 	root_cluster = hierarchicalClustering(cluster_list[:150])
 	saveData(Z)
-	cluster1 = root_cluster.children[0]
-	cluster2 = root_cluster.children[1].children[0]
-	cluster3 = root_cluster.children[1].children[1]
-	saveCluster(cluster1, "cluster1")
-	saveCluster(cluster2, "cluster2")
-	saveCluster(cluster3, "cluster3")
+	splitClusters(root_cluster, 4)
+	sns.heatmap(distanceMatrix, cmap="BuPu")
 	#print(shc.maxdists(Z))
 	plt.figure(figsize = (16,9))
 	dend = shc.dendrogram(Z)
