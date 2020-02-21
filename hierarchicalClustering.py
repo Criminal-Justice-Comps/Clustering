@@ -8,6 +8,7 @@ The project advisor was Layla Oesper in the Computer Science department.
 
 import unittest
 import math
+import csv
 
 MINIMUM = []
 MAXIMUM = []
@@ -20,36 +21,12 @@ import numpy as np
 distanceMatrix = np.ones((SIZE, SIZE)) * np.inf
 np.fill_diagonal(distanceMatrix, 0)
 
-"""Goal: transform results from clustering into a dendrogram using packages
-		installed packages include igraph, plotly, and scipy"""
-
 """https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html#scipy.cluster.hierarchy.linkage"""
 import scipy.cluster.hierarchy as shc
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 Z = []
-"""--------From URL above--------"""
-"""Need a matrix Z such that At the i-th iteration, clusters with
-indices Z[i, 0] and Z[i, 1] are combined to form cluster n + i.
-**A cluster with an *index* less than n corresponds to one of the n original observations.**
-The distance between clusters Z[i, 0] and Z[i, 1] is given by Z[i, 2].
-The fourth value Z[i, 3] represents the number of original observations(?)
-in the newly formed cluster."""
-
-'''General Structure for Z(?):
-
-					[ [ a, b, d(a, b), ? ]
-					  [ c, e, d(c, e), ? ]
-					  [ f, g, d(f, g), ? ]
-					  [ h, i, d(h, i), ? ]
-					  [ j, k, d(j, k), ? ]
-					  [ l, m, d(l, m), ? ] ]
-
-the letters are the idNumbers of the individuals(?),
-count the number of newly formed clusters and add that to total datapoints to
-get id of formed cluster,
-'''
 '''
 
 
@@ -336,14 +313,6 @@ def hierarchicalClustering(data, linkageMethod = "complete"):
 
 		return root_cluster
 	global FIRST_ITERATION
-	# clustersToCombine = None
-	# corr_distance = 0
-	# if linkageMethod == "single":
-	# 	clustersToCombine, corr_distance = minLink(data)
-	# elif linkageMethod == "complete":
-	# 	clustersToCombine, corr_distance = maxLink(data)
-	# elif linkageMethod == "average":
-	#
 	clustersToCombine, corr_distance = averageLink(data)
 	FIRST_ITERATION = False
 	cluster1 = data[clustersToCombine[0]]
@@ -418,28 +387,19 @@ def loadData():
 				continue
 			cat_data = line.split(",") #split the line we are on into individual features
 			cat_data.pop(keys_categorical.index("person_id"))
+			cat_data[-1] = cat_data[-1][:-2]
 			list_of_clusters[i].cat_vector = cat_data
 			i += 1 #This allows us to update the categorical vector, necesary since we already made the cluster above
 	keys_numeric.remove("decile_score")
+	keys_numeric[-1] = keys_numeric[-1][:-2]
 	for key in keys_numeric:
 		KEYS.append(str(key))
 	keys_categorical.remove("person_id")
+	keys_categorical[-1] = keys_categorical[-1][:-2]
 	for key in keys_categorical:
 		KEYS.append(str(key))
-	print(KEYS)
 	return list_of_clusters
 
-import sys
-import argparse
-import csv
-'''
-def parse_args():
-
-    p = argparse.ArgumentParser()
-    p.add_argument("--linkageMethod", help="choices: single, complete, average")
-    args = p.parse_args()
-    return args
-'''
 def saveData(Z):
 	with open("partialAverageMatrix.csv", "w") as f:
 		writer = csv.writer(f)
