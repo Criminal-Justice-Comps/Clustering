@@ -335,7 +335,7 @@ def loadData():
 	list_of_clusters = []
 	keys_numeric = []
 	new_id = 0
-	with open ('../datasets/TrainValidateTest/ValidateFeaturesNumericClustering.csv', mode='r') as csvfile:
+	with open ('../datasets/TrainValidateTest/TestFeaturesNumericClustering.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
 			if is_first:
@@ -376,7 +376,7 @@ def loadData():
 	cat_data = []
 	is_first = 1
 	i = 0
-	with open ('../datasets/TrainValidateTest/ANA Merged/ANAMergedValidateFeaturesCategorical.csv', mode='r') as csvfile:
+	with open ('../datasets/TrainValidateTest/ANA Merged/ANAMergedTestFeaturesCategorical.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
 			if is_first:
@@ -400,7 +400,7 @@ def loadData():
 	return list_of_clusters
 
 def saveData(Z):
-	with open("AverageLinkTrainDataClusterMatrix.csv", "w") as f:
+	with open("AverageLinkTestDataClusterMatrix.csv", "w") as f:
 		writer = csv.writer(f)
 		writer.writerows(Z)
 
@@ -447,7 +447,7 @@ def splitClusters(root, k):
 
 	i = 1
 	for cluster in k_clusters:
-		saveCluster(cluster, "AverageLinkTrainDataCluster"+str(k)+"_"+str(i))
+		saveCluster(cluster, "AverageLinkTestDataCluster"+str(k)+"_"+str(i))
 		i += 1
 
 def main():
