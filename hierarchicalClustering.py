@@ -377,7 +377,7 @@ def loadData():
 	cat_data = []
 	is_first = 1
 	i = 0
-	with open ('../datasets/TrainValidateTest/ANA Merged/ANAMergedTestFeaturesCategorical.csv', mode='r') as csvfile:
+	with open ('../datasets/TrainValidateTest/ANA Merged/ANAMergedTrainFeaturesCategorical.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
 			if is_first:
