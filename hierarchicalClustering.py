@@ -335,7 +335,7 @@ def loadData():
 	list_of_clusters = []
 	keys_numeric = []
 	new_id = 0
-	with open ('../datasets/TrainValidateTest/TestFeaturesNumericClustering.csv', mode='r') as csvfile:
+	with open ('../datasets/TrainValidateTest/TrainFeaturesNumericClustering.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
 			if is_first:
@@ -347,6 +347,7 @@ def loadData():
 			''' REMOVE THE FEATURES WE DON'T WANT'''
 			other_info.append(num_data.pop(keys_numeric.index("decile_score")))
 			ID = num_data.pop(keys_numeric.index("person_id"))
+			other_info.append(ID)
 			''' REMOVE THE FEATURES WE DON'T WANT'''
 
 			#Set global variables MINIMUM and MAXIMUM-- these are used for Gowers Distance
@@ -376,7 +377,7 @@ def loadData():
 	cat_data = []
 	is_first = 1
 	i = 0
-	with open ('../datasets/TrainValidateTest/ANA Merged/ANAMergedTestFeaturesCategorical.csv', mode='r') as csvfile:
+	with open ('../datasets/TrainValidateTest/ANA Merged/ANAMergedTrainFeaturesCategorical.csv', mode='r') as csvfile:
 		for line in csvfile:
 			#If it's the first line, get the column headers into "keys"
 			if is_first:
@@ -386,21 +387,21 @@ def loadData():
 				continue
 			cat_data = line.split(",") #split the line we are on into individual features
 			cat_data.pop(keys_categorical.index("person_id"))
-			cat_data[-1] = cat_data[-1][:-2]
+			cat_data[-1] = cat_data[-1][:-1]
 			list_of_clusters[i].cat_vector = cat_data
 			i += 1 #This allows us to update the categorical vector, necesary since we already made the cluster above
 	keys_numeric.remove("decile_score")
-	keys_numeric[-1] = keys_numeric[-1][:-2]
+	keys_numeric[-1] = keys_numeric[-1][:-1]
 	for key in keys_numeric:
 		KEYS.append(str(key))
 	keys_categorical.remove("person_id")
-	keys_categorical[-1] = keys_categorical[-1][:-2]
+	keys_categorical[-1] = keys_categorical[-1][:-1]
 	for key in keys_categorical:
 		KEYS.append(str(key))
 	return list_of_clusters
 
 def saveData(Z):
-	with open("AverageLinkTestDataClusterMatrix.csv", "w") as f:
+	with open("AverageLinkTrainingDataClusterMatrix.csv", "w") as f:
 		writer = csv.writer(f)
 		writer.writerows(Z)
 
@@ -415,7 +416,7 @@ def getLeaves(cluster):
 			queue.append(cur_cluster.children[1])
 		else:
 			data = []
-			data.append(cur_cluster.id)
+			data.append(cur_cluster.other_info[1]) #original id num.
 			for i in cur_cluster.num_vector:
 				data.append(i)
 			for j in cur_cluster.cat_vector:
@@ -447,11 +448,11 @@ def splitClusters(root, k):
 
 	i = 1
 	for cluster in k_clusters:
-		saveCluster(cluster, "AverageLinkTestDataCluster"+str(k)+"_"+str(i))
+		saveCluster(cluster, "AverageLinkTrainingDataCluster"+str(k)+"_"+str(i))
 		i += 1
 
+import copy
 def main():
-	#args = parse_args()
 	global Z
 	global SIZE
 	global distanceMatrix
@@ -460,13 +461,14 @@ def main():
 	distanceMatrix = np.ones((SIZE, SIZE)) * np.inf
 	np.fill_diagonal(distanceMatrix, 0)
 	root_cluster = hierarchicalClustering(cluster_list)
+	c = copy.deepcopy(root_cluster)
 	saveData(Z)
 	splitClusters(root_cluster, 3)
+	splitClusters(c, 4)
 	sns.heatmap(distanceMatrix, cmap="BuPu")
 	#print(shc.maxdists(Z))
 	plt.figure(figsize = (16,9))
 	dend = shc.dendrogram(Z)
-	plt.axhline(y=2.0, color='r', linestyle='--')
 	plt.show() #show the dendrogram
 
 

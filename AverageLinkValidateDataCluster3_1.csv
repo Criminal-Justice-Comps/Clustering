@@ -1,0 +1,98 @@
+person_id,age,juv_fel_count,juv_misd_count,juv_other_count,priors_count,num_r_cases,sex,race,c_charge_degree,c_charge_desc,num_r_cases,r_charge_degree,r_charge_desc,num_vr_cases,vr_charge_degree,vr_charge_desc,is_recid,is_violent_recid
+6253,36.0,0.0,0.0,0.0,1.0,0.0,Male,Caucasian,(F3),Possession Of Methamphetamine,,,,,,,0,0
+5643,35.0,0.0,0.0,0.0,0.0,0.0,Male,Caucasian,(F3),Possession Of Methamphetamine,,,,,,,0,0
+11710,32.0,0.0,0.0,0.0,2.0,0.0,Male,Caucasian,(F3),Possession Of Methamphetamine,,,,,,,0,0
+1415,32.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(F3),Possession Of Methamphetamine,,,,,,,0,0
+6333,32.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(F3),Felony/Driving Under Influence,,,,,,,0,0
+6677,33.0,0.0,0.0,0.0,3.0,0.0,Male,Hispanic,(F3),Felony Driving While Lic Suspd,,,,,,,0,0
+1489,29.0,0.0,0.0,0.0,4.0,0.0,Male,Hispanic,(F3),Depriv LEO of Protect/Communic,,,,,,,0,0
+4304,28.0,0.0,0.0,0.0,10.0,0.0,Male,Hispanic,(F3),Felony Petit Theft,,,,,,,0,0
+4015,26.0,0.0,0.0,0.0,9.0,0.0,Male,Hispanic,(F3),Possession Of Heroin,,,,,,,0,0
+257,23.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(F3),Poss3;4 Methylenedioxymethcath,,,,,,,0,0
+8784,22.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(F3),Possession of Cannabis,,,,,,,0,0
+10154,19.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(F3),Burglary Conveyance Unoccup,,,,,,,0,0
+2829,25.0,0.0,0.0,1.0,1.0,0.0,Male,Hispanic,(F3),Crimin Mischief Damage $1000+,,,,,,,0,0
+3945,25.0,0.0,0.0,0.0,0.0,0.0,Male,Caucasian,(F3),Grand Theft in the 3rd Degree,,,,,,,0,0
+2054,25.0,0.0,0.0,0.0,0.0,0.0,Male,Caucasian,(F3),Grand Theft in the 3rd Degree,,,,,,,0,0
+5198,27.0,0.0,0.0,0.0,0.0,0.0,Male,Caucasian,(F3),Grand Theft in the 3rd Degree,,,,,,,0,0
+2916,21.0,0.0,0.0,0.0,1.0,0.0,Male,Caucasian,(F3),Grand Theft in the 3rd Degree,,,,,,,0,0
+2707,36.0,0.0,0.0,0.0,6.0,0.0,Male,Caucasian,(F3),Grand Theft in the 3rd Degree,,,,,,,0,0
+11166,22.0,0.0,0.0,1.0,2.0,0.0,Male,Caucasian,(F3),Grand Theft in the 3rd Degree,,,,,,,0,0
+10068,22.0,0.0,0.0,1.0,0.0,0.0,Male,Caucasian,(F3),Grand Theft in the 3rd Degree,,,,,,,0,0
+10718,22.0,0.0,0.0,1.0,0.0,0.0,Male,Other,(F3),Grand Theft in the 3rd Degree,,,,,,,0,0
+4211,46.0,0.0,0.0,0.0,0.0,0.0,Male,Other,(F3),Grand Theft in the 3rd Degree,,,,,,,0,0
+3281,30.0,0.0,0.0,0.0,3.0,2.0,Male,Caucasian,(F3),Crimin Mischief Damage $1000+,2,(M2),Susp Drivers Lic 1st Offense,,(F3),Felony Battery (Dom Strang),1,1
+3386,35.0,0.0,0.0,0.0,6.0,4.0,Male,Caucasian,(F3),Battery on a Person Over 65,4,(M2),Susp Drivers Lic 1st Offense,,(M2),Assault,1,1
+10990,23.0,0.0,2.0,1.0,5.0,2.0,Male,Caucasian,(M2),arrest case no charge,2,(M2),Assault,,(M2),Assault,1,1
+4962,31.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(M2),Operating W/O Valid License,,,,,,,0,0
+3955,34.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M2),Operating W/O Valid License,,,,,,,0,0
+5685,38.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(M2),Operating W/O Valid License,,,,,,,0,0
+4280,29.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(M2),Disorderly Intoxication,,,,,,,0,0
+7177,22.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M2),Leave Acc/Attend Veh/More $50,,,,,,,0,0
+10835,23.0,0.0,0.0,0.0,2.0,0.0,Male,Hispanic,(F7),Burglary Conveyance Armed,,,,,,,0,0
+3447,52.0,0.0,0.0,0.0,2.0,0.0,Male,Hispanic,(F2),Burglary Unoccupied Dwelling,,,,,,,0,0
+2242,23.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(F2),Burglary Unoccupied Dwelling,,,,,,,0,0
+4902,53.0,0.0,0.0,0.0,3.0,0.0,Male,Hispanic,(M1),Battery,,,,,,,0,0
+1551,53.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Battery,,,,,,,0,0
+2925,62.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Battery,,,,,,,0,0
+1935,38.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Battery,,,,,,,0,0
+21,37.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Battery,,,,,,,0,0
+2714,45.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(M1),Battery,,,,,,,0,0
+9530,49.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Viol Injunction Protect Dom Vi,,,,,,,0,0
+10943,53.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Driving Under The Influence,,,,,,,0,0
+1073,23.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Driving Under The Influence,,,,,,,0,0
+1656,40.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),DUI - Enhanced,,,,,,,0,0
+6627,41.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(M1),Petit Theft $100- $300,,,,,,,0,0
+8352,41.0,0.0,0.0,0.0,2.0,0.0,Male,Hispanic,(M1),Viol Injunct Domestic Violence,,,,,,,0,0
+2697,50.0,0.0,0.0,0.0,11.0,0.0,Male,Hispanic,(M1),Extradition/Defendants,,,,,,,0,0
+1509,45.0,0.0,0.0,0.0,2.0,0.0,Male,Hispanic,(F5),Sex Battery Deft 18+/Vict 11-,,,,,,,0,0
+673,28.0,0.0,0.0,0.0,2.0,2.0,Male,Hispanic,(M1),arrest case no charge,2,(F2),Robbery / No Weapon,,(F3),Battery on a Person Over 65,1,1
+5597,39.0,0.0,0.0,0.0,2.0,0.0,Male,Hispanic,(F1),arrest case no charge,,,,,,,0,0
+3993,41.0,0.0,0.0,0.0,2.0,0.0,Male,Hispanic,(F1),arrest case no charge,,,,,,,0,0
+8490,39.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(F2),arrest case no charge,,,,,,,0,0
+11150,54.0,0.0,0.0,0.0,2.0,0.0,Male,Hispanic,(F3),arrest case no charge,,,,,,,0,0
+1949,47.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(F3),arrest case no charge,,,,,,,0,0
+9511,30.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(F3),arrest case no charge,,,,,,,0,0
+9203,31.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(F3),arrest case no charge,,,,,,,0,0
+9535,23.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(F3),arrest case no charge,,,,,,,0,0
+820,32.0,1.0,1.0,0.0,20.0,0.0,Male,Hispanic,(F3),arrest case no charge,,,,,,,0,0
+10256,28.0,0.0,0.0,0.0,4.0,0.0,Male,Caucasian,(F2),arrest case no charge,,,,,,,0,0
+6013,29.0,0.0,0.0,0.0,2.0,0.0,Male,Caucasian,(F2),arrest case no charge,,,,,,,0,0
+3373,33.0,0.0,0.0,0.0,1.0,0.0,Male,Caucasian,(F2),arrest case no charge,,,,,,,0,0
+10816,22.0,0.0,0.0,0.0,3.0,0.0,Male,Caucasian,(F2),arrest case no charge,,,,,,,0,0
+1716,26.0,0.0,0.0,0.0,11.0,0.0,Male,Caucasian,(F2),arrest case no charge,,,,,,,0,0
+2646,36.0,0.0,0.0,0.0,9.0,0.0,Male,Caucasian,(F2),arrest case no charge,,,,,,,0,0
+8912,21.0,0.0,1.0,0.0,6.0,0.0,Male,Caucasian,(F2),arrest case no charge,,,,,,,0,0
+4591,25.0,0.0,2.0,1.0,9.0,0.0,Male,Caucasian,(F2),arrest case no charge,,,,,,,0,0
+11380,21.0,2.0,2.0,1.0,4.0,0.0,Male,Hispanic,(F2),arrest case no charge,,,,,,,0,0
+10377,41.0,0.0,0.0,0.0,0.0,0.0,Male,Caucasian,(F2),Aggrav Battery w/Deadly Weapon,,,,,,,0,0
+5774,57.0,0.0,0.0,0.0,1.0,0.0,Male,Caucasian,(F2),Aggrav Battery w/Deadly Weapon,,,,,,,0,0
+6798,23.0,0.0,0.0,0.0,3.0,0.0,Male,Caucasian,(F2),Aggrav Battery w/Deadly Weapon,,,,,,,0,0
+10615,24.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(F2),Aggrav Battery w/Deadly Weapon,,,,,,,0,0
+10588,25.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(F2),Purchase Of Cocaine,,,,,,,0,0
+9188,53.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(F2),Lewd or Lascivious Molestation,,,,,,,0,0
+1587,55.0,0.0,0.0,0.0,2.0,0.0,Male,Caucasian,(F2),Lewd or Lascivious Molestation,,,,,,,0,0
+10635,44.0,0.0,0.0,0.0,4.0,0.0,Male,Caucasian,(F2),Burglary Unoccupied Dwelling,,,,,,,0,0
+9243,39.0,0.0,0.0,0.0,3.0,0.0,Male,Caucasian,(F2),Poss Wep Conv Felon,,,,,,,0,0
+11132,21.0,0.0,0.0,0.0,0.0,0.0,Male,Caucasian,(F2),Aggravated Battery / Pregnant,,,,,,,0,0
+9224,39.0,0.0,0.0,0.0,0.0,0.0,Male,Caucasian,(F2),Aggravated Battery / Pregnant,,,,,,,0,0
+10560,41.0,0.0,0.0,0.0,1.0,5.0,Male,Caucasian,(F2),Aggrav Battery w/Deadly Weapon,5,(F3),Tampering With Physical Evidence,,(F2),Agg Fleeing/Eluding High Speed,1,1
+11266,58.0,0.0,0.0,0.0,1.0,0.0,Male,Caucasian,(F1),arrest case no charge,,,,,,,0,0
+2988,57.0,0.0,0.0,0.0,2.0,0.0,Male,Caucasian,(F1),arrest case no charge,,,,,,,0,0
+1069,53.0,0.0,0.0,0.0,1.0,0.0,Male,Caucasian,(F1),arrest case no charge,,,,,,,0,0
+8502,52.0,0.0,0.0,0.0,3.0,0.0,Male,Caucasian,(F1),arrest case no charge,,,,,,,0,0
+1451,42.0,0.0,0.0,0.0,5.0,0.0,Male,Caucasian,(F1),arrest case no charge,,,,,,,0,0
+4365,43.0,0.0,0.0,0.0,1.0,0.0,Male,Caucasian,(F1),Del Morphine at/near Park,,,,,,,0,0
+2970,37.0,0.0,0.0,0.0,0.0,0.0,Male,Other,(F1),Aggr Child Abuse-Torture;Punish,,,,,,,0,0
+8499,25.0,0.0,0.0,0.0,2.0,0.0,Male,African-American,(F1),Robbery W/Firearm,,,,,,,0,0
+7093,22.0,0.0,0.0,0.0,1.0,0.0,Male,African-American,(F1),Robbery W/Firearm,,,,,,,0,0
+10103,42.0,0.0,0.0,0.0,5.0,0.0,Male,Caucasian,(F3),Felony Battery (Dom Strang),,,,,,,0,0
+720,51.0,0.0,0.0,0.0,0.0,0.0,Male,Caucasian,(F3),Felony Battery (Dom Strang),,,,,,,0,0
+9496,30.0,0.0,0.0,0.0,0.0,0.0,Male,Caucasian,(F3),Felony Battery (Dom Strang),,,,,,,0,0
+4312,24.0,0.0,0.0,0.0,0.0,0.0,Male,Caucasian,(F3),Felony Battery (Dom Strang),,,,,,,0,0
+11264,22.0,0.0,1.0,0.0,2.0,0.0,Male,Caucasian,(F3),Felony Battery (Dom Strang),,,,,,,0,0
+5895,24.0,0.0,0.0,0.0,1.0,0.0,Male,Caucasian,(F3),Possession Of Amphetamine,,,,,,,0,0
+5256,25.0,0.0,0.0,0.0,4.0,0.0,Male,Caucasian,(F7),Burglary Dwelling Armed,,,,,,,0,0
+9170,52.0,0.0,0.0,0.0,1.0,0.0,Male,Caucasian,(F7),Burglary Conveyance Assault/Bat,,,,,,,0,0
+6129,28.0,0.0,0.0,0.0,1.0,0.0,Male,African-American,(F7),Burglary Conveyance Assault/Bat,,,,,,,0,0
+9147,25.0,0.0,0.0,0.0,0.0,6.0,Male,Other,(F3),Possession of Cocaine,6,(F1),Robbery Firearm Wearing Mask,,(F7),Burglary Dwelling Armed,1,1

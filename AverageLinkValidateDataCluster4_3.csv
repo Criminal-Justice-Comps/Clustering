@@ -1,0 +1,49 @@
+person_id,age,juv_fel_count,juv_misd_count,juv_other_count,priors_count,num_r_cases,sex,race,c_charge_degree,c_charge_desc,num_r_cases,r_charge_degree,r_charge_desc,num_vr_cases,vr_charge_degree,vr_charge_desc,is_recid,is_violent_recid
+7296,57.0,0.0,0.0,0.0,0.0,0.0,Male,Other,(M1),Battery,,,,,,,0,0
+2670,63.0,0.0,0.0,0.0,0.0,0.0,Male,Other,(M1),Battery,,,,,,,0,0
+920,50.0,0.0,0.0,0.0,4.0,0.0,Male,Other,(M1),Battery,,,,,,,0,0
+1278,57.0,0.0,0.0,0.0,0.0,0.0,Male,Other,(M1),Possess Cannabis/20 Grams Or Less,,,,,,,0,0
+6236,33.0,0.0,0.0,0.0,0.0,0.0,Male,Other,(M1),Battery,,,,,,,0,0
+2457,32.0,0.0,0.0,0.0,0.0,0.0,Male,Other,(M1),Battery,,,,,,,0,0
+4597,33.0,0.0,0.0,0.0,3.0,0.0,Male,Other,(M1),Battery,,,,,,,0,0
+4687,24.0,0.0,0.0,0.0,2.0,0.0,Male,Other,(M1),Battery,,,,,,,0,0
+373,24.0,0.0,0.0,0.0,0.0,0.0,Male,Other,(M1),Battery,,,,,,,0,0
+5287,32.0,0.0,0.0,0.0,0.0,0.0,Male,Other,(M1),Resist Officer w/Violence,,,,,,,0,0
+8845,21.0,0.0,0.0,0.0,0.0,0.0,Male,Other,(M1),Aggravated Assault w/Firearm,,,,,,,0,0
+4876,50.0,0.0,0.0,0.0,5.0,0.0,Male,Other,(F2),arrest case no charge,,,,,,,0,0
+4644,25.0,0.0,0.0,0.0,1.0,0.0,Male,Other,(F2),arrest case no charge,,,,,,,0,0
+11032,27.0,0.0,0.0,0.0,1.0,0.0,Male,Other,(F2),Traffick Hydrocodone   4g><14g,,,,,,,0,0
+4175,27.0,0.0,0.0,0.0,6.0,0.0,Male,Other,(F2),Burglary Unoccupied Dwelling,,,,,,,0,0
+3673,33.0,0.0,0.0,0.0,0.0,0.0,Male,Other,(F2),Sell or Offer for Sale Counterfeit Goods,,,,,,,0,0
+188,33.0,0.0,0.0,0.0,2.0,0.0,Male,Other,(MO3),Failure To Pay Taxi Cab Charge,,,,,,,0,0
+5308,36.0,0.0,0.0,0.0,8.0,0.0,Male,Other,(MO3),arrest case no charge,,,,,,,0,0
+11499,27.0,0.0,0.0,0.0,4.0,2.0,Male,Other,(F3),Grand Theft in the 3rd Degree,2,(F2),Sexual Battery / Vict 12 Yrs +,,(F2),Sexual Battery / Vict 12 Yrs +,1,1
+4276,21.0,0.0,0.0,0.0,0.0,1.0,Male,African-American,(F3),Felony Battery (Dom Strang),1,(F2),Sexual Battery / Vict 12 Yrs +,,(F2),Sexual Battery / Vict 12 Yrs +,1,1
+2664,27.0,0.0,0.0,0.0,0.0,1.0,Male,African-American,(F3),Aggravated Assault W/Dead Weap,1,(F2),Throw Deadly Missile Into Veh,,(F2),Throw Deadly Missile Into Veh,1,1
+7700,28.0,0.0,0.0,0.0,6.0,1.0,Male,African-American,(F3),Grand Theft (Motor Vehicle),1,(F2),Robbery / No Weapon,,(F2),Robbery / No Weapon,1,1
+4387,28.0,0.0,1.0,0.0,6.0,1.0,Male,African-American,(F3),Grand Theft in the 3rd Degree,1,(F2),Aggravated Battery / Pregnant,,(F2),Aggravated Battery / Pregnant,1,1
+5550,24.0,0.0,4.0,0.0,14.0,1.0,Male,African-American,(F3),Grand Theft (Motor Vehicle),1,(F2),Robbery,,(F2),Robbery,1,1
+1187,21.0,0.0,2.0,1.0,2.0,1.0,Male,Caucasian,(F3),Grand Theft (Motor Vehicle),1,(F2),Robbery Sudd Snatch w/Weapon,,(F2),Robbery Sudd Snatch w/Weapon,1,1
+2297,21.0,0.0,0.0,0.0,5.0,1.0,Male,Caucasian,(F3),Poss Pyrrolidinovalerophenone,1,(F2),Agg Battery Grt/Bod/Harm,,(F2),Agg Battery Grt/Bod/Harm,1,1
+6165,34.0,0.0,0.0,0.0,5.0,1.0,Male,Caucasian,(M2),Petit Theft,1,(M2),Petit Theft,,(F2),Aggrav Battery w/Deadly Weapon,1,1
+6525,51.0,0.0,0.0,0.0,1.0,1.0,Male,Caucasian,(F3),Possession Of Alprazolam,1,(M2),Ped Obstruct Traf/No Permit Sol,,(F3),Aggravated Assault W/Dead Weap,1,1
+11202,28.0,0.0,1.0,0.0,2.0,1.0,Male,African-American,(F3),Grand Theft in the 3rd Degree,1,(M2),Disorderly Conduct,,(F3),Aggravated Assault W/Dead Weap,1,1
+1556,27.0,2.0,1.0,0.0,5.0,1.0,Male,African-American,(F3),Robbery W/Firearm,1,(F3),Robbery Sudd Snatch No Weapon,,(F3),Robbery Sudd Snatch No Weapon,1,1
+1759,41.0,0.0,0.0,0.0,17.0,1.0,Male,Caucasian,(M2),Driving License Suspended,1,(F3),Robbery Sudd Snatch No Weapon,,(F3),Robbery Sudd Snatch No Weapon,1,1
+7124,36.0,0.0,0.0,0.0,4.0,3.0,Male,Caucasian,(M2),Theft,3,(F3),Corrupt Public Servant,,(F3),Battery on Law Enforc Officer,1,1
+11556,26.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Possess Cannabis/20 Grams Or Less,,,,,,,0,0
+7316,39.0,0.0,0.0,0.0,2.0,0.0,Male,Hispanic,(M1),Possess Cannabis/20 Grams Or Less,,,,,,,0,0
+9958,25.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Felony Battery (Dom Strang),,,,,,,0,0
+5777,39.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Felony Battery (Dom Strang),,,,,,,0,0
+4683,29.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Battery,,,,,,,0,0
+524,27.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Battery,,,,,,,0,0
+9069,27.0,0.0,0.0,0.0,2.0,0.0,Male,Hispanic,(M1),Battery,,,,,,,0,0
+3592,25.0,0.0,0.0,0.0,1.0,0.0,Male,Hispanic,(M1),Battery,,,,,,,0,0
+629,21.0,0.0,0.0,0.0,0.0,0.0,Male,Hispanic,(M1),Battery,,,,,,,0,0
+6358,25.0,0.0,0.0,0.0,9.0,0.0,Male,Hispanic,(M1),Battery,,,,,,,0,0
+8400,52.0,0.0,0.0,0.0,0.0,1.0,Male,Hispanic,(M1),Battery,1,(M1),Viol Pretrial Release Dom Viol,,,,1,0
+8761,32.0,0.0,0.0,0.0,4.0,1.0,Male,Caucasian,(M1),Battery,1,(M1),Viol Injunct Domestic Violence,,(F3),Felony Battery w/Prior Convict,1,1
+2274,54.0,0.0,0.0,0.0,14.0,2.0,Male,Caucasian,(M1),Battery,2,(M1),Resist/Obstruct W/O Violence,,(F3),Battery Emergency Care Provide,1,1
+7606,36.0,0.0,0.0,0.0,11.0,4.0,Male,Caucasian,(M1),Battery,4,(M1),Resist/Obstruct W/O Violence,,(M1),Battery,1,1
+5799,23.0,0.0,0.0,0.0,3.0,2.0,Male,Hispanic,(M1),Battery,2,(F3),Felony Battery w/Prior Convict,,(M1),Battery,1,1
+8207,31.0,0.0,0.0,0.0,3.0,2.0,Male,Caucasian,(M1),Battery,2,(F1),Sex Batt Faml/Cust Vict 12-17Y,,(F1),Sex Batt Faml/Cust Vict 12-17Y,1,1
